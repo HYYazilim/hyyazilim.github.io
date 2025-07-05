@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HY Yazılım - Hayalini Kodluyoruz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0a0a0a;
+      color: #ffffff;
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #00ffc8;
+      font-size: 2.5em;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    input, textarea, button {
+      width: 300px;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      font-size: 1em;
+    }
+
+    button {
+      background-color: #00ffc8;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .contact-info {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <h1>HY Yazılım</h1>
+  <p>Hayalini bilgisayarına kodluyoruz!</p>
+  <p>Görev çubuğunda yürüyen adam mı?<br>
+  Tuşa basınca gizli görev mi açılsın?<br>
+  Konuşan masaüstü mü?<br>
+  Anlat, biz yapalım.</p>
+
+  <form action="https://formspree.io/f/xgvybkwj" method="POST">
+    <h3>İsteğini Yaz</h3>
+    <input type="text" name="ad" placeholder="Adınız" required /><br />
+    <textarea name="istek" placeholder="Hayalinizi anlatın.
+Ayrıca sizinle iletişime geçebilmemiz için bir telefon numarası veya e-posta adresi yazmayı unutmayın.
+Hayalinizi birlikte gerçekleştirelim!" rows="5" required></textarea><br />
+    <button type="submit">Gönder</button>
+  </form>
+
+  <div class="contact-info">
+    <h3>İletişim</h3>
+    <p>📱 WhatsApp: 0555 163 18 50</p>
+    <p>📧 E-posta: hasanyusufyildiz35@gmail.com</p>
+  </div>
+</body>
+</html>
