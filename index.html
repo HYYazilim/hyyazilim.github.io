@@ -4,12 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HYYazılım</title>
-
-  <!-- Favicon: favicon.ico dosyasını aynı klasöre koy -->
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
-
   <style>
-    /* Genel */
     body {
       background: linear-gradient(135deg, #0d324d, #7f5a83);
       color: #e0f7f7;
@@ -21,27 +17,21 @@
       align-items: center;
       min-height: 100vh;
     }
-
-    /* Logo */
     .logo {
       margin-top: 40px;
       filter: drop-shadow(0 0 15px #00ffc8);
       animation: float 2s ease-in-out infinite alternate;
     }
-
     @keyframes float {
       from { transform: translateY(0); }
       to { transform: translateY(-10px); }
     }
-
-    /* Başlık */
     h1 {
       font-size: 3rem;
       margin-top: 20px;
       text-shadow: 0 0 8px #00ffc8;
       animation: glow 2s ease-in-out infinite alternate;
     }
-
     @keyframes glow {
       from {
         text-shadow: 0 0 8px #00ffc8, 0 0 20px #00ffc8;
@@ -50,8 +40,6 @@
         text-shadow: 0 0 20px #00ffc8, 0 0 40px #00ffc8;
       }
     }
-
-    /* Açıklama */
     p {
       font-size: 1.25rem;
       max-width: 600px;
@@ -59,8 +47,6 @@
       margin: 20px 0 30px 0;
       line-height: 1.5;
     }
-
-    /* Form */
     form {
       background: rgba(255, 255, 255, 0.1);
       padding: 30px;
@@ -71,7 +57,6 @@
       backdrop-filter: blur(10px);
       margin-bottom: 30px;
     }
-
     input, textarea {
       width: 100%;
       padding: 15px;
@@ -84,16 +69,13 @@
       resize: none;
       transition: background 0.3s ease;
     }
-
     input::placeholder, textarea::placeholder {
       color: #c0ffff;
     }
-
     input:focus, textarea:focus {
       background: rgba(255, 255, 255, 0.3);
       outline: none;
     }
-
     button {
       width: 100%;
       padding: 15px;
@@ -107,43 +89,59 @@
       transition: background 0.3s ease;
       box-shadow: 0 4px 15px #00ffc8;
     }
-
     button:hover {
       background: #00bfa5;
       box-shadow: 0 6px 20px #00bfa5;
     }
-
     .contact-info {
       margin: 30px 0;
       text-align: center;
       font-size: 1rem;
       color: #a0eee6;
     }
-
     h2 {
       margin-top: 40px;
       font-size: 1.8rem;
       text-shadow: 0 0 5px #00ffc8;
     }
-
-    ul {
+    ul.project-list {
       list-style-type: none;
       padding: 0;
       text-align: center;
+      max-width: 600px;
+      margin: 0 auto 40px auto;
     }
-
-    li a {
-      display: block;
+    ul.project-list li {
+      margin: 12px 0;
+    }
+    ul.project-list li a {
+      display: inline-block;
       color: #00ffc8;
-      font-size: 1.1rem;
-      margin: 10px 0;
+      font-size: 1.2rem;
+      text-decoration: none;
+      padding: 10px 20px;
+      border: 2px solid #00ffc8;
+      border-radius: 12px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    ul.project-list li a:hover {
+      background: #00ffc8;
+      color: #000;
       text-decoration: none;
     }
-
-    li a:hover {
-      text-decoration: underline;
+    /* Hakkımda bölümü */
+    #hakkimda {
+      max-width: 700px;
+      margin: 40px auto;
+      color: #b0f0e8;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      text-align: center;
     }
-
+    #hakkimda h2 {
+      text-shadow: 0 0 5px #00ffc8;
+      margin-bottom: 20px;
+    }
     @media (max-width: 480px) {
       h1 {
         font-size: 2.2rem;
@@ -151,12 +149,15 @@
       form {
         padding: 20px;
       }
+      ul.project-list li a {
+        font-size: 1rem;
+        padding: 8px 16px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Logo -->
   <img src="logo.png" alt="HYYazılım Logo" class="logo" width="120" />
 
   <h1>HYYazılım</h1>
@@ -168,11 +169,21 @@
     <button type="submit">Gönder</button>
   </form>
 
+  <section id="hakkimda">
+    <h2>👤 Hakkımda</h2>
+    <p>Merhaba! Ben Hasan Yusuf YILDIZ, genç ve tutkulu bir yazılım geliştiricisiyim.<br>
+    Bilgisayar programlama ve teknolojiye olan ilgim sayesinde, kullanıcıların hayatını kolaylaştıracak ve onları mutlu edecek yaratıcı projeler geliştiriyorum.</p>
+    <p>HYYazılım çatısı altında, hem masaüstü hem mobil platformlar için özgün yazılımlar tasarlıyor ve geliştiriyorum.<br>
+    Sizlerin ihtiyaçlarını dinleyerek, kişiye özel çözümler üretmek benim en büyük motivasyonum.</p>
+    <p>İnovasyona, sürekli öğrenmeye ve gelişmeye açık biriyim. Teknoloji dünyasında iz bırakmak için çalışıyorum.<br>
+    Bana ulaşmaktan çekinmeyin, birlikte harika şeyler yapabiliriz!</p>
+  </section>
+
   <h2>📂 Hazır Projeler</h2>
-  <ul>
-    <li><a href="HYController.zip">💾 HYController – Sistem yönetim aracı (İndir)</a></li>
-    <li><a href="ChatApp.zip">🗣️ Sesli + Yazılı Chat Odası (İndir)</a></li>
-    <li><a href="TrollButon.exe">🎮 Troll Buton – Tıkladıkça ses çıkaran buton (İndir)</a></li>
+  <ul class="project-list">
+    <li><a href="HYController.zip" download>💾 HYController – Sistem yönetim aracı (İndir)</a></li>
+    <li><a href="ChatApp.zip" download>🗣️ Sesli + Yazılı Chat Odası (İndir)</a></li>
+    <li><a href="TrollButon.exe" download>🎮 Troll Buton – Tıkladıkça ses çıkaran buton (İndir)</a></li>
   </ul>
 
   <div class="contact-info">
