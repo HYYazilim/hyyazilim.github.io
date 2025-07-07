@@ -1,182 +1,240 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HYYazılım</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <style>
-    body {
-      background: linear-gradient(135deg, #0d324d, #7f5a83);
-      color: #e0f7f7;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .logo {
-      margin-top: 40px;
-      filter: drop-shadow(0 0 15px #00ffc8);
-      animation: float 2s ease-in-out infinite alternate;
-    }
-    @keyframes float {
-      from { transform: translateY(0); }
-      to { transform: translateY(-10px); }
-    }
-    p {
-      font-size: 1.25rem;
-      max-width: 600px;
-      text-align: center;
-      margin: 20px 0 30px 0;
-      line-height: 1.5;
-    }
-    form {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 30px rgba(0, 255, 200, 0.2);
-      width: 100%;
-      max-width: 400px;
-      backdrop-filter: blur(10px);
-      margin-bottom: 30px;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 15px;
-      margin: 15px 0;
-      border-radius: 10px;
-      border: none;
-      font-size: 1rem;
-      background: rgba(255, 255, 255, 0.15);
-      color: #e0f7f7;
-      resize: none;
-      transition: background 0.3s ease;
-    }
-    input::placeholder, textarea::placeholder {
-      color: #c0ffff;
-    }
-    input:focus, textarea:focus {
-      background: rgba(255, 255, 255, 0.3);
-      outline: none;
-    }
-    button {
-      width: 100%;
-      padding: 15px;
-      border-radius: 10px;
-      border: none;
-      background: #00ffc8;
-      color: #000;
-      font-weight: 700;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      box-shadow: 0 4px 15px #00ffc8;
-    }
-    button:hover {
-      background: #00bfa5;
-      box-shadow: 0 6px 20px #00bfa5;
-    }
-    .contact-info {
-      margin: 30px 0;
-      text-align: center;
-      font-size: 1rem;
-      color: #a0eee6;
-    }
-    h2 {
-      margin-top: 40px;
-      font-size: 1.8rem;
-      text-shadow: 0 0 5px #00ffc8;
-    }
-    ul.project-list {
-      list-style-type: none;
-      padding: 0;
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto 40px auto;
-    }
-    ul.project-list li {
-      margin: 12px 0;
-    }
-    ul.project-list li a {
-      display: inline-block;
-      color: #00ffc8;
-      font-size: 1.2rem;
-      text-decoration: none;
-      padding: 10px 20px;
-      border: 2px solid #00ffc8;
-      border-radius: 12px;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-    ul.project-list li a:hover {
-      background: #00ffc8;
-      color: #000;
-      text-decoration: none;
-    }
-    /* Hakkımda bölümü */
-    #hakkimda {
-      max-width: 700px;
-      margin: 40px auto;
-      color: #b0f0e8;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      text-align: center;
-    }
-    #hakkimda h2 {
-      text-shadow: 0 0 5px #00ffc8;
-      margin-bottom: 20px;
-    }
-    @media (max-width: 480px) {
-      form {
-        padding: 20px;
-      }
-      ul.project-list li a {
-        font-size: 1rem;
-        padding: 8px 16px;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HYYazılım</title>
+<style>
+  body {
+    background: linear-gradient(135deg, #0d324d, #7f5a83);
+    color: #e0f7f7;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(13, 50, 77, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    z-index: 1000;
+  }
+  nav a {
+    color: #00ffc8;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  nav a:hover {
+    color: #00bfa5;
+  }
+  .logo {
+    display: block;
+    margin: 15px auto 25px auto;
+    filter: drop-shadow(0 0 18px #00ffc8);
+    animation: float 2.5s ease-in-out infinite alternate;
+    width: 130px; /* biraz büyüttüm */
+  }
+  @keyframes float {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
+  }
+  /* Form Container */
+  .form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255,255,255,0.12);
+    padding: 35px 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 40px #00ffc8;
+    width: 90%;
+    max-width: 380px; /* biraz daralttım */
+    text-align: center;
+  }
+  .form-container h2 {
+    margin: 0 0 20px 0;
+    color: #00ffc8;
+    text-shadow: 0 0 10px #00ffc8;
+    font-weight: 700;
+  }
+  input, textarea {
+    width: 100%;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: #e0f7f7;
+    font-size: 1rem;
+    resize: none;
+    transition: background 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center; /* placeholder ve yazı ortada */
+  }
+  input::placeholder, textarea::placeholder {
+    color: #c0ffff;
+    text-align: center;
+  }
+  input:focus, textarea:focus {
+    background: rgba(255,255,255,0.4);
+    outline: none;
+  }
+  button {
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+    background: #00ffc8;
+    color: #000;
+    font-weight: 700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px #00ffc8;
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #00bfa5;
+    box-shadow: 0 6px 25px #00bfa5;
+  }
+  /* Popup Temel */
+  .popup-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  .popup {
+    background: #123954;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px #00ffc8;
+    max-width: 500px;
+    width: 90%;
+    color: #a0eee6;
+    position: relative;
+    font-size: 1.1rem;
+  }
+  .popup h2 {
+    margin-top: 0;
+    text-shadow: 0 0 8px #00ffc8;
+  }
+  .popup .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 1.5rem;
+    color: #00ffc8;
+    cursor: pointer;
+    font-weight: 700;
+    user-select: none;
+  }
+  /* Footer */
+  footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+    background: rgba(13, 50, 77, 0.95);
+    color: #00ffc8;
+    font-size: 1rem;
+    font-weight: 900;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 -4px 20px #00ffc8;
+    user-select: none;
+    text-shadow:
+      0 0 5px #00ffc8,
+      0 0 10px #00ffc8,
+      0 0 20px #00ffc8,
+      0 0 30px #00ffc8;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>
 </head>
 <body>
 
-  <!-- LOGO (Yazı yok) -->
-  <img src="logo.png" alt="HYYazılım Logo" class="logo" width="120" />
+<nav>
+  <a onclick="openPopup('hakkimda')">Hakkımda</a>
+  <a onclick="openPopup('projeler')">Projeler</a>
+  <a onclick="openPopup('iletisim')">İletişim</a>
+</nav>
 
-  <!-- Tanıtım -->
-  <p>Hayalini bilgisayarına veya telefonuna kodluyoruz!<br>Görev çubuğunda yürüyen adam mı? Tuşa basınca gizli görev mi açılsın? Konuşan masaüstü mü? Anlat, biz yapalım.</p>
+<img src="logo.png" alt="HYYazılım Logo" class="logo" />
 
-  <!-- Form -->
+<div class="form-container">
+  <h2>İletişim Formu</h2>
   <form action="https://formspree.io/f/xgvybkwj" method="POST">
-    <input type="text" name="ad" placeholder="Adınız" required />
-    <textarea name="istek" placeholder="Hayalinizi anlatın. Ayrıca sizinle iletişime geçebilmemiz için bir telefon numarası veya e-posta adresi yazın." rows="5" required></textarea>
+    <input type="text" name="ad" placeholder="Adınız ve Soyadınız" required />
+    <textarea name="istek" placeholder="Hayalinizi anlatın. Telefon veya e-posta yazın." rows="4" required></textarea>
     <button type="submit">Gönder</button>
   </form>
+</div>
 
-  <!-- Hakkımda -->
-  <section id="hakkimda">
-    <h2>👤 Hakkımda</h2>
-    <p>Merhaba! Ben Hasan Yusuf YILDIZ, genç ve tutkulu bir yazılım geliştiricisiyim.<br>
-    Bilgisayar programlama ve teknolojiye olan ilgim sayesinde, kullanıcıların hayatını kolaylaştıracak ve onları mutlu edecek yaratıcı projeler geliştiriyorum.</p>
-    <p>HYYazılım çatısı altında, hem masaüstü hem mobil platformlar için özgün yazılımlar tasarlıyor ve geliştiriyorum.<br>
-    Sizlerin ihtiyaçlarını dinleyerek, kişiye özel çözümler üretmek benim en büyük motivasyonum.</p>
-    <p>İnovasyona, sürekli öğrenmeye ve gelişmeye açık biriyim. Teknoloji dünyasında iz bırakmak için çalışıyorum.<br>
-    Bana ulaşmaktan çekinmeyin, birlikte harika şeyler yapabiliriz!</p>
-  </section>
-
-  <!-- Projeler -->
-  <h2>📂 Hazır Projeler</h2>
-  <ul class="project-list">
-    <li><a href="HYController.zip" download>💾 HYController – Sistem yönetim aracı (İndir)</a></li>
-    <li><a href="ChatApp.zip" download>🗣️ Sesli + Yazılı Chat Odası (İndir)</a></li>
-    <li><a href="TrollButon.exe" download>🎮 Troll Buton – Tıkladıkça ses çıkaran buton (İndir)</a></li>
-  </ul>
-
-  <!-- İletişim -->
-  <div class="contact-info">
-    <p>📱 WhatsApp: 0555 163 18 50<br>📧 E-posta: hasanyusufyildiz35@gmail.com</p>
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup" id="popup-content">
+    <span class="close-btn" onclick="closePopup()">✖</span>
+    <div id="popup-text"></div>
   </div>
+</div>
+
+<footer>
+  © 2025 HYYAZILIM - TÜM HAKLARI SAKLIDIR. İNDİRME BAŞLATILDI! TEŞEKKÜRLER.
+</footer>
+
+<script>
+  const popupOverlay = document.getElementById('popup-overlay');
+  const popupText = document.getElementById('popup-text');
+
+  const contents = {
+    hakkimda: `
+      <h2>👤 Hakkımda</h2>
+      <p>Merhaba! Ben Hasan Yusuf YILDIZ, genç ve tutkulu bir yazılım geliştiricisiyim.</p>
+      <p>Bilgisayar programlama ve teknolojiye olan ilgim sayesinde, kullanıcıların hayatını kolaylaştıracak ve onları mutlu edecek yaratıcı projeler geliştiriyorum.</p>
+      <p>HYYazılım çatısı altında, hem masaüstü hem mobil platformlar için özgün yazılımlar tasarlıyor ve geliştiriyorum.</p>
+    `,
+    projeler: `
+      <h2>📂 Hazır Projeler</h2>
+      <ul>
+        <li><a href="HYController.zip" download style="color:#00ffc8;">💾 HYController – Sistem yönetim aracı</a></li>
+        <li><a href="ChatApp.zip" download style="color:#00ffc8;">🗣️ Sesli + Yazılı Chat Odası</a></li>
+        <li><a href="TrollButon.exe" download style="color:#00ffc8;">🎮 Troll Buton – Tıkladıkça ses çıkaran buton</a></li>
+      </ul>
+    `,
+    iletisim: `
+      <h2>📞 İletişim</h2>
+      <p>📱 WhatsApp: 0555 163 18 50</p>
+      <p>📧 E-posta: hasanyusufyildiz35@gmail.com</p>
+    `
+  };
+
+  function openPopup(section) {
+    popupText.innerHTML = contents[section] || '<p>İçerik bulunamadı.</p>';
+    popupOverlay.style.display = 'flex';
+  }
+
+  function closePopup() {
+    popupOverlay.style.display = 'none';
+  }
+
+  document.addEventListener('keydown', e => {
+    if(e.key === "Escape" && popupOverlay.style.display === 'flex') {
+      closePopup();
+    }
+  });
+</script>
 
 </body>
 </html>
