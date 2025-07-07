@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HYYazılım</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #0d324d, #7f5a83);
+      color: #e0f7f7;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .logo {
+      margin-top: 40px;
+      filter: drop-shadow(0 0 15px #00ffc8);
+      animation: float 2s ease-in-out infinite alternate;
+    }
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+    p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      text-align: center;
+      margin: 20px 0 30px 0;
+      line-height: 1.5;
+    }
+    form {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0, 255, 200, 0.2);
+      width: 100%;
+      max-width: 400px;
+      backdrop-filter: blur(10px);
+      margin-bottom: 30px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.15);
+      color: #e0f7f7;
+      resize: none;
+      transition: background 0.3s ease;
+    }
+    input::placeholder, textarea::placeholder {
+      color: #c0ffff;
+    }
+    input:focus, textarea:focus {
+      background: rgba(255, 255, 255, 0.3);
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      border-radius: 10px;
+      border: none;
+      background: #00ffc8;
+      color: #000;
+      font-weight: 700;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      box-shadow: 0 4px 15px #00ffc8;
+    }
+    button:hover {
+      background: #00bfa5;
+      box-shadow: 0 6px 20px #00bfa5;
+    }
+    .contact-info {
+      margin: 30px 0;
+      text-align: center;
+      font-size: 1rem;
+      color: #a0eee6;
+    }
+    h2 {
+      margin-top: 40px;
+      font-size: 1.8rem;
+      text-shadow: 0 0 5px #00ffc8;
+    }
+    ul.project-list {
+      list-style-type: none;
+      padding: 0;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 40px auto;
+    }
+    ul.project-list li {
+      margin: 12px 0;
+    }
+    ul.project-list li a {
+      display: inline-block;
+      color: #00ffc8;
+      font-size: 1.2rem;
+      text-decoration: none;
+      padding: 10px 20px;
+      border: 2px solid #00ffc8;
+      border-radius: 12px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    ul.project-list li a:hover {
+      background: #00ffc8;
+      color: #000;
+      text-decoration: none;
+    }
+    /* Hakkımda bölümü */
+    #hakkimda {
+      max-width: 700px;
+      margin: 40px auto;
+      color: #b0f0e8;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+    #hakkimda h2 {
+      text-shadow: 0 0 5px #00ffc8;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 480px) {
+      form {
+        padding: 20px;
+      }
+      ul.project-list li a {
+        font-size: 1rem;
+        padding: 8px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGO (Yazı yok) -->
+  <img src="logo.png" alt="HYYazılım Logo" class="logo" width="120" />
+
+  <!-- Tanıtım -->
+  <p>Hayalini bilgisayarına veya telefonuna kodluyoruz!<br>Görev çubuğunda yürüyen adam mı? Tuşa basınca gizli görev mi açılsın? Konuşan masaüstü mü? Anlat, biz yapalım.</p>
+
+  <!-- Form -->
+  <form action="https://formspree.io/f/xgvybkwj" method="POST">
+    <input type="text" name="ad" placeholder="Adınız" required />
+    <textarea name="istek" placeholder="Hayalinizi anlatın. Ayrıca sizinle iletişime geçebilmemiz için bir telefon numarası veya e-posta adresi yazın." rows="5" required></textarea>
+    <button type="submit">Gönder</button>
+  </form>
+
+  <!-- Hakkımda -->
+  <section id="hakkimda">
+    <h2>👤 Hakkımda</h2>
+    <p>Merhaba! Ben Hasan Yusuf YILDIZ, genç ve tutkulu bir yazılım geliştiricisiyim.<br>
+    Bilgisayar programlama ve teknolojiye olan ilgim sayesinde, kullanıcıların hayatını kolaylaştıracak ve onları mutlu edecek yaratıcı projeler geliştiriyorum.</p>
+    <p>HYYazılım çatısı altında, hem masaüstü hem mobil platformlar için özgün yazılımlar tasarlıyor ve geliştiriyorum.<br>
+    Sizlerin ihtiyaçlarını dinleyerek, kişiye özel çözümler üretmek benim en büyük motivasyonum.</p>
+    <p>İnovasyona, sürekli öğrenmeye ve gelişmeye açık biriyim. Teknoloji dünyasında iz bırakmak için çalışıyorum.<br>
+    Bana ulaşmaktan çekinmeyin, birlikte harika şeyler yapabiliriz!</p>
+  </section>
+
+  <!-- Projeler -->
+  <h2>📂 Hazır Projeler</h2>
+  <ul class="project-list">
+    <li><a href="HYController.zip" download>💾 HYController – Sistem yönetim aracı (İndir)</a></li>
+    <li><a href="ChatApp.zip" download>🗣️ Sesli + Yazılı Chat Odası (İndir)</a></li>
+    <li><a href="TrollButon.exe" download>🎮 Troll Buton – Tıkladıkça ses çıkaran buton (İndir)</a></li>
+  </ul>
+
+  <!-- İletişim -->
+  <div class="contact-info">
+    <p>📱 WhatsApp: 0555 163 18 50<br>📧 E-posta: hasanyusufyildiz35@gmail.com</p>
+  </div>
+
+</body>
+</html>
