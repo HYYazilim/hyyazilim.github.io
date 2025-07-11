@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="google-site-verification" content="nIMaZ9HZNF8yhKK3W24_wkrOgvB1E_SPONgRN5gE14c" />
 <title>HYYazılım | Hasan Yusuf YILDIZ - Yazılım Projeleri</title>
-<meta name="description" content="HYYazılım, Hasan Yusuf YILDIZ tarafından geliştirilen masaüstü ve mobil yazılım projeleri sunar." />
 <style>
   body {
     background: linear-gradient(135deg, #0d324d, #7f5a83);
@@ -13,7 +11,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0; padding: 0;
     height: 100vh;
-    overflow: hidden;
+    overflow: auto;
   }
   nav {
     position: sticky;
@@ -22,8 +20,8 @@
     backdrop-filter: blur(10px);
     padding: 10px 20px;
     display: flex;
-    justify-content: center;
-    gap: 30px;
+    align-items: center;
+    gap: 20px;
     z-index: 1000;
   }
   nav a {
@@ -38,20 +36,18 @@
     color: #00bfa5;
   }
   .logo {
-    display: block;
-    margin: 15px auto 25px auto;
     filter: drop-shadow(0 0 18px #00ffc8);
     animation: float 2.5s ease-in-out infinite alternate;
-    width: 130px;
+    width: 160px;
+    margin-right: auto;
   }
   @keyframes float {
     from { transform: translateY(0); }
     to { transform: translateY(-10px); }
   }
-  /* Form Container */
   .form-container {
     position: absolute;
-    top: 50%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: rgba(255,255,255,0.12);
@@ -68,7 +64,7 @@
     text-shadow: 0 0 10px #00ffc8;
     font-weight: 700;
   }
-  input, textarea {
+  textarea {
     width: 100%;
     padding: 15px;
     margin: 15px 0;
@@ -82,11 +78,11 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
   }
-  input::placeholder, textarea::placeholder {
+  textarea::placeholder {
     color: #c0ffff;
     text-align: center;
   }
-  input:focus, textarea:focus {
+  textarea:focus {
     background: rgba(255,255,255,0.4);
     outline: none;
   }
@@ -107,7 +103,6 @@
     background: #00bfa5;
     box-shadow: 0 6px 25px #00bfa5;
   }
-  /* Popup Temel */
   .popup-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -119,7 +114,7 @@
   }
   .popup {
     background: #123954;
-    padding: 30px;
+    padding: 60px;
     border-radius: 15px;
     box-shadow: 0 0 30px #00ffc8;
     max-width: 500px;
@@ -127,6 +122,7 @@
     color: #a0eee6;
     position: relative;
     font-size: 1.1rem;
+    margin-top: 60px;
   }
   .popup h2 {
     margin-top: 0;
@@ -142,7 +138,6 @@
     font-weight: 700;
     user-select: none;
   }
-  /* Footer */
   footer {
     position: fixed;
     bottom: 0;
@@ -164,6 +159,60 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
+  .auth-links {
+    margin-left: auto;
+    display: flex;
+    gap: 15px;
+  }
+  .user-menu {
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+    font-weight: 700;
+    color: #00ffc8;
+    user-select: none;
+    font-size: 1.1rem;
+    cursor: default;
+  }
+  .user-menu > a {
+    user-select: text;
+    color: #00ffc8;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .dropdown-wrapper {
+    position: relative;
+    cursor: pointer;
+  }
+  .dropdown-arrow {
+    user-select: none;
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #123954;
+    min-width: 150px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3);
+    border-radius: 10px;
+    z-index: 3000;
+    padding: 10px 0;
+  }
+  .dropdown-content a {
+    color: #00ffc8;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: block;
+    font-weight: 600;
+  }
+  .dropdown-content a:hover {
+    background-color: #00bfa5;
+    color: #000;
+  }
 </style>
 </head>
 <body>
@@ -172,14 +221,31 @@
   <a onclick="openPopup('hakkimda')">Hakkımda</a>
   <a onclick="openPopup('projeler')">Projeler</a>
   <a onclick="openPopup('iletisim')">İletişim</a>
+  <a onclick="openPopup('basvurular')">Başvurularım</a>
+
+  <div id="auth-links" class="auth-links">
+    <a href="#" onclick="showAuthForm('login'); return false;">Giriş Yap</a>
+    <a href="#" onclick="showAuthForm('register'); return false;">Kayıt Ol</a>
+  </div>
+
+  <div id="user-menu" class="user-menu" style="display:none;">
+    <span id="username-display" style="user-select:text; cursor:default;"></span>
+    <a href="#" onclick="openPopup('profil'); return false;">Profilimi Düzenle</a>
+    <div class="dropdown-wrapper" onclick="toggleDropdown(event)">
+      <span class="dropdown-arrow">▼</span>
+      <div class="dropdown-content" id="user-dropdown">
+        <a href="#" onclick="openPopup('basvurular'); return false;">Eski Başvurularım</a>
+        <a href="#" onclick="logout(); return false;">Çıkış Yap</a>
+      </div>
+    </div>
+  </div>
 </nav>
 
 <img src="logo.png" alt="HYYazılım Logo" class="logo" />
 
 <div class="form-container">
   <h2>İletişim Formu</h2>
-  <form action="https://formspree.io/f/xgvybkwj" method="POST">
-    <input type="text" name="ad" placeholder="Adınız ve Soyadınız" required />
+  <form id="contact-form" action="https://formspree.io/f/xgvybkwj" method="POST" onsubmit="saveBasvuru(event)">
     <textarea name="istek" placeholder="Hayalinizi anlatın. Telefon veya e-posta yazın." rows="4" required></textarea>
     <button type="submit">Gönder</button>
   </form>
@@ -208,33 +274,223 @@
       <p>HYYazılım çatısı altında, hem masaüstü hem mobil platformlar için özgün yazılımlar tasarlıyor ve geliştiriyorum.</p>
     `,
     projeler: `
-  <h2>📂 Hazır Projeler</h2>
-  <ul>
-    <li><a href="projeler/app.exe" download style="color:#00ffc8;">🗣️ Sesli + Yazılı Chat Uygulaması</a></li>
-    <li><a href="https://drive.google.com/uc?export=download&id=1Z63xOMHodHOEKKjxybZCtgF9pqvtGMAG" target="_blank" style="color:#00ffc8;">🎃 Dayz’ın Evi – Korku Oyunu (Google Drive)</a></li>
-  </ul>
-`,
+      <h2>📂 Hazır Projeler</h2>
+      <ul>
+        <li><a href="projeler/app.exe" download style="color:#00ffc8;">🗣️ Sesli + Yazılı Chat Uygulaması</a></li>
+        <li><a href="https://drive.google.com/uc?export=download&id=1Z63xOMHodHOEKKjxybZCtgF9pqvtGMAG" target="_blank" style="color:#00ffc8;">🎃 Dayz’ın Evi – Korku Oyunu (Google Drive)</a></li>
+      </ul>
+    `,
     iletisim: `
       <h2>📞 İletişim</h2>
       <p>📱 WhatsApp: 0555 163 18 50</p>
       <p>📧 E-posta: hasanyusufyildiz35@gmail.com</p>
+    `,
+    basvurular: `
+      <h2>📝 Başvurularım</h2>
+      <ul id="basvuru-list" style="max-height:200px; overflow-y:auto; list-style:none; padding-left:0; color:#00ffc8;"></ul>
+      <button onclick="clearBasvurular()" style="margin-top:15px; padding:12px; border:none; border-radius:10px; background:#00ffc8; color:#000; font-weight:700; cursor:pointer;">Tüm Başvuruları Temizle</button>
+    `,
+    profil: `
+      <h2>⚙️ Profilimi Düzenle</h2>
+      <form onsubmit="event.preventDefault(); updateProfile();">
+        <label>Kullanıcı Adı (değiştirilemez):</label><br>
+        <input type="text" id="profile-username" readonly style="background:#222; color:#ccc; border:none; padding:8px 10px; border-radius:6px; margin-bottom:12px;"><br>
+        <label>E-posta:</label><br>
+        <input type="email" id="profile-email" required style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;"><br>
+        <label>Telefon (opsiyonel):</label><br>
+        <input type="tel" id="profile-telefon" style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;"><br>
+        <label>Yeni Şifre (boşsa değiştirme):</label><br>
+        <input type="password" id="profile-pass" placeholder="Yeni şifre"><br><br>
+        <button type="submit" style="background:#00ffc8; color:#000; font-weight:700; padding:12px 0; border-radius:10px; border:none; cursor:pointer;">Güncelle</button>
+      </form>
+    `,
+    loginForm: `
+      <h2>Giriş Yap</h2>
+      <form onsubmit="event.preventDefault(); login();">
+        <input type="text" id="login-user" placeholder="Kullanıcı Adı" required style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;">
+        <input type="password" id="login-pass" placeholder="Şifre" required style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;">
+        <button type="submit" style="background:#00ffc8; color:#000; font-weight:700; padding:12px 0; border-radius:10px; border:none; cursor:pointer;">Giriş</button>
+      </form>
+      <p style="margin-top:15px; font-size:0.9rem; cursor:pointer; color:#00bfa5;" onclick="openPopup('registerForm')">Hesabınız yok mu? Kayıt Ol</p>
+    `,
+    registerForm: `
+      <h2>Kayıt Ol</h2>
+      <form onsubmit="event.preventDefault(); register();">
+        <input type="text" id="register-user" placeholder="Kullanıcı Adı" required style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;">
+        <input type="email" id="register-email" placeholder="E-posta" required style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;">
+        <input type="password" id="register-pass" placeholder="Şifre" required style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;">
+        <button type="submit" style="background:#00ffc8; color:#000; font-weight:700; padding:12px 0; border-radius:10px; border:none; cursor:pointer;">Kayıt Ol</button>
+      </form>
+      <p style="margin-top:15px; font-size:0.9rem; cursor:pointer; color:#00bfa5;" onclick="openPopup('loginForm')">Zaten hesabınız var mı? Giriş Yap</p>
     `
   };
 
-  function openPopup(section) {
-    popupText.innerHTML = contents[section] || '<p>İçerik bulunamadı.</p>';
-    popupOverlay.style.display = 'flex';
+  // Açılır menüyü göster/gizle
+  function toggleDropdown(e) {
+    e.stopPropagation();
+    const dropdown = document.getElementById('user-dropdown');
+    dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+  }
+  document.addEventListener('click', () => {
+    const dropdown = document.getElementById('user-dropdown');
+    if(dropdown) dropdown.style.display = 'none';
+  });
+
+  // Popup aç
+  function openPopup(key) {
+    if(key === 'login') {
+      popupText.innerHTML = contents.loginForm;
+      popupOverlay.style.display = 'flex';
+      return;
+    }
+    if(key === 'register') {
+      popupText.innerHTML = contents.registerForm;
+      popupOverlay.style.display = 'flex';
+      return;
+    }
+    if(contents[key]) {
+      popupText.innerHTML = contents[key];
+      popupOverlay.style.display = 'flex';
+      if(key === 'profil') loadProfile();
+      if(key === 'basvurular') loadBasvurular();
+    }
   }
 
+  // Popup kapa
   function closePopup() {
     popupOverlay.style.display = 'none';
   }
 
-  document.addEventListener('keydown', e => {
-    if(e.key === "Escape" && popupOverlay.style.display === 'flex') {
+  // Kullanıcı bilgileri (localStorage kullanıyoruz)
+  let currentUser = null;
+
+  // Giriş yap
+  function login() {
+    const user = document.getElementById('login-user').value.trim();
+    const pass = document.getElementById('login-pass').value;
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    if(users[user] && users[user].password === pass) {
+      currentUser = user;
+      updateUI();
       closePopup();
+      alert('Giriş başarılı! Hoşgeldin, ' + user);
+    } else {
+      alert('Kullanıcı adı veya şifre yanlış.');
     }
-  });
+  }
+
+  // Kayıt ol
+  function register() {
+    const user = document.getElementById('register-user').value.trim();
+    const email = document.getElementById('register-email').value.trim();
+    const pass = document.getElementById('register-pass').value;
+    let users = JSON.parse(localStorage.getItem('users') || '{}');
+    if(users[user]) {
+      alert('Bu kullanıcı adı zaten alınmış.');
+      return;
+    }
+    users[user] = {email: email, password: pass, telefon: ''};
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('Kayıt başarılı! Lütfen giriş yapınız.');
+    openPopup('login');
+  }
+
+  // Profil yükle
+  function loadProfile() {
+    if(!currentUser) return;
+    let users = JSON.parse(localStorage.getItem('users') || '{}');
+    if(users[currentUser]) {
+      document.getElementById('profile-username').value = currentUser;
+      document.getElementById('profile-email').value = users[currentUser].email || '';
+      document.getElementById('profile-telefon').value = users[currentUser].telefon || '';
+      document.getElementById('profile-pass').value = '';
+    }
+  }
+
+  // Profil güncelle
+  function updateProfile() {
+    if(!currentUser) return alert('Giriş yapılmamış.');
+    let users = JSON.parse(localStorage.getItem('users') || '{}');
+    if(!users[currentUser]) return alert('Kullanıcı bulunamadı.');
+    users[currentUser].email = document.getElementById('profile-email').value.trim();
+    users[currentUser].telefon = document.getElementById('profile-telefon').value.trim();
+    const newPass = document.getElementById('profile-pass').value;
+    if(newPass.length > 0) {
+      users[currentUser].password = newPass;
+    }
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('Profil güncellendi!');
+    closePopup();
+    updateUI();
+  }
+
+  // Çıkış yap
+  function logout() {
+    currentUser = null;
+    updateUI();
+    alert('Çıkış yapıldı.');
+  }
+
+  // UI güncelle
+  function updateUI() {
+    const authLinks = document.getElementById('auth-links');
+    const userMenu = document.getElementById('user-menu');
+    const usernameDisplay = document.getElementById('username-display');
+
+    if(currentUser) {
+      authLinks.style.display = 'none';
+      userMenu.style.display = 'flex';
+      usernameDisplay.textContent = currentUser;
+    } else {
+      authLinks.style.display = 'flex';
+      userMenu.style.display = 'none';
+      usernameDisplay.textContent = '';
+    }
+  }
+
+  // Başvuruları kaydet ve yükle (localStorage)
+  function saveBasvuru(e) {
+    e.preventDefault();
+    const form = e.target;
+    const istek = form.istek.value.trim();
+    if(!currentUser) {
+      alert('Lütfen önce giriş yapın.');
+      return;
+    }
+    let basvurular = JSON.parse(localStorage.getItem('basvurular') || '{}');
+    if(!basvurular[currentUser]) basvurular[currentUser] = [];
+    basvurular[currentUser].push({tarih: new Date().toLocaleString(), icerik: istek});
+    localStorage.setItem('basvurular', JSON.stringify(basvurular));
+    alert('Başvurunuz kaydedildi!');
+    form.reset();
+  }
+
+  function loadBasvurular() {
+    if(!currentUser) return alert('Lütfen giriş yapın.');
+    let basvurular = JSON.parse(localStorage.getItem('basvurular') || '{}');
+    const listEl = document.getElementById('basvuru-list');
+    listEl.innerHTML = '';
+    if(basvurular[currentUser] && basvurular[currentUser].length > 0) {
+      basvurular[currentUser].forEach(b => {
+        const li = document.createElement('li');
+        li.textContent = `[${b.tarih}] - ${b.icerik}`;
+        listEl.appendChild(li);
+      });
+    } else {
+      listEl.textContent = 'Henüz başvurunuz yok.';
+    }
+  }
+
+  function clearBasvurular() {
+    if(!currentUser) return alert('Lütfen giriş yapın.');
+    let basvurular = JSON.parse(localStorage.getItem('basvurular') || '{}');
+    basvurular[currentUser] = [];
+    localStorage.setItem('basvurular', JSON.stringify(basvurular));
+    loadBasvurular();
+  }
+
+  // İlk açılışta UI güncelle
+  updateUI();
 </script>
 
 </body>
