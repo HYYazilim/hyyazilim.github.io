@@ -1,533 +1,191 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HYYazılım | Hasan Yusuf YILDIZ - Yazılım Projeleri</title>
-<style>
-  /* Temel ve karanlık mod stilleri */
-  body {
-    margin:0; padding:0; height:100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0d324d, #7f5a83);
-    color: #e0f7f7;
-    transition: background 0.4s, color 0.4s;
-  }
-  body.dark {
-    background: #121212;
-    color: #a0eee6;
-  }
-  nav {
-    position: sticky; top:0; display:flex; align-items:center; gap:20px;
-    background: rgba(13, 50, 77, 0.85);
-    backdrop-filter: blur(10px);
-    padding:10px 20px; z-index:1000;
-  }
-  nav a {
-    color: #00ffc8; font-weight:600; font-size:1.1rem;
-    cursor:pointer; text-decoration:none; transition: color 0.3s;
-  }
-  nav a:hover {
-    color: #00bfa5;
-  }
-  .logo {
-    width:160px; margin-right:auto;
-    filter: drop-shadow(0 0 18px #00ffc8);
-    animation: float 2.5s ease-in-out infinite alternate;
-  }
-  @keyframes float {
-    from { transform: translateY(0); }
-    to { transform: translateY(-10px); }
-  }
-  .form-container {
-    position: absolute; top: 55%; left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255,255,255,0.12);
-    padding: 35px 25px;
-    border-radius: 15px;
-    box-shadow: 0 0 40px #00ffc8;
-    width: 90%; max-width: 380px;
-    text-align: center;
-  }
-  body.dark .form-container {
-    background: rgba(20,20,20,0.7);
-    box-shadow: 0 0 40px #0ff;
-  }
-  textarea {
-    width: 100%; padding: 15px; margin: 15px 0;
-    border-radius: 10px; border: none;
-    background: rgba(255,255,255,0.2);
-    color: #e0f7f7; font-size: 1rem;
-    resize: none; transition: background 0.3s ease;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-  }
-  body.dark textarea {
-    background: rgba(255,255,255,0.1);
-    color: #a0eee6;
-  }
-  textarea::placeholder {
-    color: #c0ffff; text-align: center;
-  }
-  textarea:focus {
-    background: rgba(255,255,255,0.4);
-    outline: none;
-  }
-  button {
-    width: 100%; padding: 15px;
-    border-radius: 10px; border: none;
-    background: #00ffc8; color: #000;
-    font-weight: 700; font-size: 1.2rem;
-    cursor: pointer;
-    box-shadow: 0 4px 20px #00ffc8;
-    transition: background 0.3s ease;
-  }
-  button:hover {
-    background: #00bfa5;
-    box-shadow: 0 6px 25px #00bfa5;
-  }
-  .popup-overlay {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.7);
-    display: none; justify-content: center; align-items: center;
-    z-index: 2000;
-  }
-  .popup {
-    background: #123954;
-    padding: 60px;
-    border-radius: 15px;
-    box-shadow: 0 0 30px #00ffc8;
-    max-width: 500px;
-    width: 90%;
-    color: #a0eee6;
-    position: relative;
-    font-size: 1.1rem;
-    margin-top: 60px;
-    animation: popupIn 0.3s ease forwards;
-  }
-  @keyframes popupIn {
-    from {opacity: 0; transform: translateY(-30px);}
-    to {opacity: 1; transform: translateY(0);}
-  }
-  .popup h2 {
-    margin-top: 0;
-    text-shadow: 0 0 8px #00ffc8;
-  }
-  .close-btn {
-    position: absolute; top: 12px; right: 15px;
-    font-size: 1.5rem; color: #00ffc8;
-    cursor: pointer; font-weight: 700;
-    user-select: none;
-  }
-  footer {
-    position: fixed; bottom: 0; width: 100%;
-    text-align: center; padding: 12px 0;
-    background: rgba(13, 50, 77, 0.95);
-    color: #00ffc8; font-size: 1rem;
-    font-weight: 900;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    box-shadow: 0 -4px 20px #00ffc8;
-    user-select: none;
-    text-shadow:
-      0 0 5px #00ffc8,
-      0 0 10px #00ffc8,
-      0 0 20px #00ffc8,
-      0 0 30px #00ffc8;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .auth-links {
-    margin-left: auto;
-    display: flex;
-    gap: 15px;
-  }
-  .user-menu {
-    display: flex !important;
-    align-items: center;
-    gap: 12px;
-    margin-left: auto;
-    font-weight: 700;
-    color: #00ffc8;
-    user-select: none;
-    font-size: 1.1rem;
-    cursor: default;
-  }
-  .user-menu > a {
-    user-select: text;
-    color: #00ffc8;
-    font-weight: 600;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  .dropdown-wrapper {
-    position: relative;
-    cursor: pointer;
-  }
-  .dropdown-arrow {
-    user-select: none;
-    font-weight: 700;
-    margin-left: 2px;
-  }
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #123954;
-    min-width: 150px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3);
-    border-radius: 10px;
-    z-index: 3000;
-    padding: 10px 0;
-  }
-  .dropdown-content a {
-    color: #00ffc8;
-    padding: 10px 20px;
-    text-decoration: none;
-    display: block;
-    font-weight: 600;
-  }
-  .dropdown-content a:hover {
-    background-color: #00bfa5;
-    color: #000;
-  }
-  /* Giriş/kayıt formları inputları */
-  input[type=text], input[type=email], input[type=password], input[type=tel] {
-    width: 100%; padding: 8px 10px;
-    border-radius: 6px; margin-bottom: 12px;
-    border: none;
-    font-size: 1rem;
-  }
-  body.dark input[type=text], body.dark input[type=email], body.dark input[type=password], body.dark input[type=tel] {
-    background: #222; color: #ccc;
-  }
-  /* Tema butonu */
-  #theme-toggle-btn {
-    margin-left: 20px;
-    background: transparent;
-    border: 2px solid #00ffc8;
-    color: #00ffc8;
-    padding: 6px 14px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 700;
-    transition: all 0.3s ease;
-  }
-  #theme-toggle-btn:hover {
-    background: #00ffc8;
-    color: #000;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HY Yazılım - Giriş</title>
+  <style>
+    :root {
+      --bg-color: #e0f7fa;
+      --text-color: #000;
+      --card-bg: #ffffff;
+      --accent: #00bcd4;
+    }
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #fff;
+      --card-bg: #1e1e1e;
+      --accent: #00e5ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: all 0.4s ease;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.1rem;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 3rem auto;
+      max-width: 1000px;
+      padding: 1rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      width: 300px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card h2 {
+      margin-bottom: 1rem;
+      font-size: 1.6rem;
+      color: var(--accent);
+    }
+
+    .card input {
+      width: 100%;
+      padding: 0.7rem;
+      margin: 0.5rem 0 1rem 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    .card button {
+      width: 100%;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .card button:hover {
+      background: #0097a7;
+    }
+
+    .dark-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--card-bg);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      background-color: var(--card-bg);
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      animation: fadeIn 0.8s ease-in-out;
+    }
+  </style>
 </head>
 <body>
 
-<nav>
-  <a onclick="openPopup('hakkimda')">Hakkımda</a>
-  <a onclick="openPopup('projeler')">Projeler</a>
-  <a onclick="openPopup('iletisim')">İletişim</a>
-  <a onclick="openPopup('basvurular')">Başvurularım</a>
+  <button class="dark-toggle" onclick="toggleTheme()">🌓</button>
 
-  <div id="auth-links" class="auth-links">
-    <a href="#" onclick="showAuthForm('login'); return false;">Giriş Yap</a>
-    <a href="#" onclick="showAuthForm('register'); return false;">Kayıt Ol</a>
-  </div>
+  <header>
+    <h1>HY Yazılım</h1>
+    <p>Geleceği kodlayan platform. Hemen giriş yap veya kayıt ol!</p>
+  </header>
 
-  <div id="user-menu" class="user-menu" style="display:none;">
-    <span id="username-display" style="user-select:text; cursor:default;"></span>
-    <a href="#" onclick="openPopup('profil'); return false;">Profilimi Düzenle</a>
-    <div class="dropdown-wrapper" onclick="toggleDropdown(event)">
-      <span class="dropdown-arrow">▼</span>
-      <div class="dropdown-content" id="user-dropdown">
-        <a href="#" onclick="openPopup('basvurular'); return false;">Eski Başvurularım</a>
-        <a href="#" onclick="logout(); return false;">Çıkış Yap</a>
-      </div>
+  <div class="container">
+    <div class="card">
+      <h2>Giriş Yap</h2>
+      <form action="https://formsubmit.co/HYYazilim@gmail.com" method="POST">
+        <input type="text" name="username" placeholder="Kullanıcı Adı" required>
+        <input type="password" name="password" placeholder="Şifre" required>
+        <button type="submit">Giriş Yap</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Kayıt Ol</h2>
+      <form action="https://formsubmit.co/HYYazilim@gmail.com" method="POST">
+        <input type="text" name="new_username" placeholder="Yeni Kullanıcı Adı" required>
+        <input type="email" name="email" placeholder="E-posta" required>
+        <input type="password" name="new_password" placeholder="Şifre" required>
+        <button type="submit">Kayıt Ol</button>
+      </form>
     </div>
   </div>
 
-  <button id="theme-toggle-btn" title="Tema değiştir">Karanlık Tema</button>
-</nav>
+  <footer>
+    © 2025 HY Yazılım - Tüm Hakları Saklıdır.
+  </footer>
 
-<img src="logo.png" alt="HYYazılım Logo" class="logo" />
-
-<div class="form-container">
-  <h2>İletişim Formu</h2>
-  <form id="contact-form" action="https://formspree.io/f/xgvybkwj" method="POST" onsubmit="saveBasvuru(event)">
-    <textarea name="istek" placeholder="Hayalinizi anlatın. Telefon veya e-posta yazın." rows="4" required></textarea>
-    <button type="submit">Gönder</button>
-  </form>
-</div>
-
-<div class="popup-overlay" id="popup-overlay">
-  <div class="popup" id="popup-content">
-    <span class="close-btn" onclick="closePopup()">✖</span>
-    <div id="popup-text"></div>
-  </div>
-</div>
-
-<footer>
-  © 2025 HYYAZILIM - TÜM HAKLARI SAKLIDIR. İNDİRME BAŞLATILDI! TEŞEKKÜRLER.
-</footer>
-
-<script>
-  // İçerikler popup için
-  const contents = {
-    hakkimda: `
-      <h2>👤 Hakkımda</h2>
-      <p>Merhaba! Ben Hasan Yusuf YILDIZ, genç ve tutkulu bir yazılım geliştiricisiyim.</p>
-      <p>Bilgisayar programlama ve teknolojiye olan ilgim sayesinde, kullanıcıların hayatını kolaylaştıracak ve onları mutlu edecek yaratıcı projeler geliştiriyorum.</p>
-      <p>HYYazılım çatısı altında, hem masaüstü hem mobil platformlar için özgün yazılımlar tasarlıyor ve geliştiriyorum.</p>
-    `,
-    projeler: `
-      <h2>📂 Hazır Projeler</h2>
-      <ul>
-        <li><a href="projeler/app.exe" download style="color:#00ffc8;">🗣️ Sesli + Yazılı Chat Uygulaması</a></li>
-        <li><a href="https://drive.google.com/uc?export=download&id=1Z63xOMHodHOEKKjxybZCtgF9pqvtGMAG" target="_blank" style="color:#00ffc8;">🎃 Dayz’ın Evi – Korku Oyunu (Google Drive)</a></li>
-      </ul>
-    `,
-    iletisim: `
-      <h2>📞 İletişim</h2>
-      <p>📱 WhatsApp: 0555 163 18 50</p>
-      <p>📧 E-posta: hasanyusufyildiz35@gmail.com</p>
-    `,
-    basvurular: `
-      <h2>📝 Başvurularım</h2>
-      <ul id="basvuru-list" style="max-height:200px; overflow-y:auto; list-style:none; padding-left:0; color:#00ffc8;"></ul>
-      <button onclick="clearBasvurular()" style="margin-top:15px; padding:12px; border:none; border-radius:10px; background:#00ffc8; color:#000; font-weight:700; cursor:pointer;">Tüm Başvuruları Temizle</button>
-    `,
-    profil: `
-      <h2>⚙️ Profilimi Düzenle</h2>
-      <form onsubmit="event.preventDefault(); updateProfile();">
-        <label>Kullanıcı Adı (değiştirilemez):</label><br>
-        <input type="text" id="profile-username" readonly style="background:#222; color:#ccc; border:none; padding:8px 10px; border-radius:6px; margin-bottom:12px;"><br>
-        <label>E-posta:</label><br>
-        <input type="email" id="profile-email" required style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;"><br>
-        <label>Telefon (opsiyonel):</label><br>
-        <input type="tel" id="profile-telefon" style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;"><br>
-        <label>Yeni Şifre (boşsa değiştirme):</label><br>
-        <input type="password" id="profile-pass" placeholder="Yeni şifre"><br><br>
-        <button type="submit" style="background:#00ffc8; color:#000; font-weight:700; padding:12px 0; border-radius:10px; border:none; cursor:pointer;">Güncelle</button>
-      </form>
-    `,
-    loginForm: `
-      <h2>Giriş Yap</h2>
-      <form onsubmit="event.preventDefault(); login();">
-        <input type="text" id="login-user" placeholder="Kullanıcı Adı" required style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;">
-        <input type="password" id="login-pass" placeholder="Şifre" required style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;">
-        <button type="submit" style="background:#00ffc8; color:#000; font-weight:700; padding:12px 0; border-radius:10px; border:none; cursor:pointer;">Giriş</button>
-      </form>
-      <p style="margin-top:15px; font-size:0.9rem; cursor:pointer; color:#00bfa5;" onclick="openPopup('registerForm')">Hesabınız yok mu? Kayıt Ol</p>
-    `,
-    registerForm: `
-      <h2>Kayıt Ol</h2>
-      <form onsubmit="event.preventDefault(); register();">
-        <input type="text" id="register-user" placeholder="Kullanıcı Adı" required style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;">
-        <input type="email" id="register-email" placeholder="E-posta" required style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;">
-        <input type="password" id="register-pass" placeholder="Şifre" required style="width:100%; padding:8px 10px; border-radius:6px; margin-bottom:12px;">
-        <button type="submit" style="background:#00ffc8; color:#000; font-weight:700; padding:12px 0; border-radius:10px; border:none; cursor:pointer;">Kayıt Ol</button>
-      </form>
-      <p style="margin-top:15px; font-size:0.9rem; cursor:pointer; color:#00bfa5;" onclick="openPopup('loginForm')">Zaten hesabınız var mı? Giriş Yap</p>
-    `
-  };
-
-  // Popup açma/kapama
-  const popupOverlay = document.getElementById('popup-overlay');
-  const popupText = document.getElementById('popup-text');
-  function openPopup(name) {
-    if(name === 'basvurular') {
-      loadBasvurular();
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const theme = html.getAttribute("data-theme");
+      if (theme === "dark") {
+        html.removeAttribute("data-theme");
+        localStorage.setItem("theme", "light");
+      } else {
+        html.setAttribute("data-theme", "dark");
+        localStorage.setItem("theme", "dark");
+      }
     }
-    if(name === 'profil') {
-      loadProfile();
-    }
-    popupText.innerHTML = contents[name] || '';
-    popupOverlay.style.display = 'flex';
-  }
-  function closePopup() {
-    popupOverlay.style.display = 'none';
-    hideDropdown();
-  }
 
-  // Başvuruları yükle ve göster
-  function loadBasvurular() {
-    const list = document.getElementById('basvuru-list');
-    const basvurular = JSON.parse(localStorage.getItem('basvurular') || '[]');
-    if(basvurular.length === 0) {
-      list.innerHTML = '<li style="color:#f00; font-weight:700;">Hiç başvurunuz yok.</li>';
-      return;
-    }
-    list.innerHTML = basvurular.map(b => 
-      `<li style="margin-bottom:8px; border-bottom: 1px solid #00bfa5; padding-bottom: 4px;">
-        <strong>${b.user}</strong><br><small>${b.time}</small><br>${b.text}
-      </li>`
-    ).join('');
-  }
-  // Başvuruları temizle
-  function clearBasvurular() {
-    if(confirm('Tüm başvurularınız silinecek. Emin misiniz?')) {
-      localStorage.removeItem('basvurular');
-      loadBasvurular();
-    }
-  }
-
-  // Form gönderimi ve localStorage kaydı
-  function saveBasvuru(event) {
-    // Boşsa engelle
-    const istek = event.target.istek.value.trim();
-    if(!istek) {
-      alert('Lütfen istek alanını doldurun.');
-      event.preventDefault();
-      return;
-    }
-    // localStorage'a ekle
-    let basvurular = JSON.parse(localStorage.getItem('basvurular') || '[]');
-    basvurular.push({
-      text: istek,
-      user: currentUser ? currentUser.username : 'Ziyaretçi',
-      time: new Date().toLocaleString()
-    });
-    localStorage.setItem('basvurular', JSON.stringify(basvurular));
-    // Form gönderimine izin ver (Formspree'ye)
-    // NOT: event.preventDefault() yok burada!
-    alert('Başvurunuz kaydedildi ve gönderildi. Teşekkürler!');
-    event.target.reset();
-  }
-
-  // Kullanıcı yönetimi (basit localStorage tabanlı)
-  let currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-
-  function showAuthForm(type) {
-    popupText.innerHTML = (type === 'login') ? contents.loginForm : contents.registerForm;
-    popupOverlay.style.display = 'flex';
-  }
-
-  function register() {
-    const user = document.getElementById('register-user').value.trim();
-    const email = document.getElementById('register-email').value.trim();
-    const pass = document.getElementById('register-pass').value.trim();
-    if(!user || !email || !pass) {
-      alert('Lütfen tüm alanları doldurun.');
-      return;
-    }
-    let users = JSON.parse(localStorage.getItem('users') || '[]');
-    if(users.some(u => u.username.toLowerCase() === user.toLowerCase())) {
-      alert('Bu kullanıcı adı zaten alınmış.');
-      return;
-    }
-    users.push({username: user, email: email, password: pass});
-    localStorage.setItem('users', JSON.stringify(users));
-    alert('Kayıt başarılı! Giriş yapabilirsiniz.');
-    openPopup('loginForm');
-  }
-
-  function login() {
-    const user = document.getElementById('login-user').value.trim();
-    const pass = document.getElementById('login-pass').value.trim();
-    let users = JSON.parse(localStorage.getItem('users') || '[]');
-    const found = users.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass);
-    if(!found) {
-      alert('Kullanıcı adı veya şifre hatalı.');
-      return;
-    }
-    currentUser = found;
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    alert('Hoşgeldin, ' + currentUser.username);
-    updateUIAfterLogin();
-    closePopup();
-  }
-
-  function logout() {
-    if(confirm('Çıkış yapmak istediğine emin misin?')) {
-      currentUser = null;
-      localStorage.removeItem('currentUser');
-      updateUIAfterLogin();
-    }
-  }
-
-  function updateUIAfterLogin() {
-    const authLinks = document.getElementById('auth-links');
-    const userMenu = document.getElementById('user-menu');
-    if(currentUser) {
-      authLinks.style.display = 'none';
-      userMenu.style.display = 'flex';
-      document.getElementById('username-display').textContent = currentUser.username;
-    } else {
-      authLinks.style.display = 'flex';
-      userMenu.style.display = 'none';
-    }
-  }
-
-  // Profil yükle ve güncelle
-  function loadProfile() {
-    if(!currentUser) {
-      alert('Önce giriş yapmalısınız.');
-      closePopup();
-      return;
-    }
-    document.getElementById('profile-username').value = currentUser.username;
-    document.getElementById('profile-email').value = currentUser.email || '';
-    document.getElementById('profile-telefon').value = currentUser.phone || '';
-    document.getElementById('profile-pass').value = '';
-  }
-
-  function updateProfile() {
-    const email = document.getElementById('profile-email').value.trim();
-    const phone = document.getElementById('profile-telefon').value.trim();
-    const pass = document.getElementById('profile-pass').value.trim();
-    if(!email) {
-      alert('E-posta boş olamaz.');
-      return;
-    }
-    let users = JSON.parse(localStorage.getItem('users') || '[]');
-    const index = users.findIndex(u => u.username === currentUser.username);
-    if(index === -1) {
-      alert('Kullanıcı bulunamadı.');
-      return;
-    }
-    users[index].email = email;
-    users[index].phone = phone;
-    if(pass) users[index].password = pass;
-    localStorage.setItem('users', JSON.stringify(users));
-    currentUser = users[index];
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    alert('Profil güncellendi!');
-    closePopup();
-    updateUIAfterLogin();
-  }
-
-  // Dropdown aç kapa
-  function toggleDropdown(e) {
-    e.stopPropagation();
-    const dropdown = document.getElementById('user-dropdown');
-    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-  }
-  function hideDropdown() {
-    const dropdown = document.getElementById('user-dropdown');
-    if(dropdown) dropdown.style.display = 'none';
-  }
-  document.addEventListener('click', hideDropdown);
-
-  // Tema değiştirici
-  const themeBtn = document.getElementById('theme-toggle-btn');
-  function setTheme(dark) {
-    if(dark) {
-      document.body.classList.add('dark');
-      themeBtn.textContent = 'Açık Tema';
-    } else {
-      document.body.classList.remove('dark');
-      themeBtn.textContent = 'Karanlık Tema';
-    }
-    localStorage.setItem('darkTheme', dark ? '1' : '0');
-  }
-  themeBtn.onclick = () => {
-    const darkNow = document.body.classList.contains('dark');
-    setTheme(!darkNow);
-  };
-  // Sayfa yüklenince tema ayarla
-  window.onload = () => {
-    updateUIAfterLogin();
-    const darkPref = localStorage.getItem('darkTheme');
-    setTheme(darkPref === '1');
-  };
-</script>
-
+    // Sayfa yüklenince tema ayarı uygula
+    window.onload = () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    };
+  </script>
 </body>
 </html>
