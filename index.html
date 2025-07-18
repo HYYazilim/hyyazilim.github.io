@@ -5,96 +5,79 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>HYYazılım | Hasan Yusuf YILDIZ - Yazılım Projeleri</title>
 <style>
+  /* Temel ve karanlık mod stilleri */
   body {
+    margin:0; padding:0; height:100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #0d324d, #7f5a83);
     color: #e0f7f7;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0; padding: 0;
-    height: 100vh;
-    overflow: auto;
+    transition: background 0.4s, color 0.4s;
+  }
+  body.dark {
+    background: #121212;
+    color: #a0eee6;
   }
   nav {
-    position: sticky;
-    top: 0;
+    position: sticky; top:0; display:flex; align-items:center; gap:20px;
     background: rgba(13, 50, 77, 0.85);
     backdrop-filter: blur(10px);
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    z-index: 1000;
+    padding:10px 20px; z-index:1000;
   }
   nav a {
-    color: #00ffc8;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: color 0.3s ease;
+    color: #00ffc8; font-weight:600; font-size:1.1rem;
+    cursor:pointer; text-decoration:none; transition: color 0.3s;
   }
   nav a:hover {
     color: #00bfa5;
   }
   .logo {
+    width:160px; margin-right:auto;
     filter: drop-shadow(0 0 18px #00ffc8);
     animation: float 2.5s ease-in-out infinite alternate;
-    width: 160px;
-    margin-right: auto;
   }
   @keyframes float {
     from { transform: translateY(0); }
     to { transform: translateY(-10px); }
   }
   .form-container {
-    position: absolute;
-    top: 55%;
-    left: 50%;
+    position: absolute; top: 55%; left: 50%;
     transform: translate(-50%, -50%);
     background: rgba(255,255,255,0.12);
     padding: 35px 25px;
     border-radius: 15px;
     box-shadow: 0 0 40px #00ffc8;
-    width: 90%;
-    max-width: 380px;
+    width: 90%; max-width: 380px;
     text-align: center;
   }
-  .form-container h2 {
-    margin: 0 0 20px 0;
-    color: #00ffc8;
-    text-shadow: 0 0 10px #00ffc8;
-    font-weight: 700;
+  body.dark .form-container {
+    background: rgba(20,20,20,0.7);
+    box-shadow: 0 0 40px #0ff;
   }
   textarea {
-    width: 100%;
-    padding: 15px;
-    margin: 15px 0;
-    border-radius: 10px;
-    border: none;
+    width: 100%; padding: 15px; margin: 15px 0;
+    border-radius: 10px; border: none;
     background: rgba(255,255,255,0.2);
-    color: #e0f7f7;
-    font-size: 1rem;
-    resize: none;
-    transition: background 0.3s ease;
+    color: #e0f7f7; font-size: 1rem;
+    resize: none; transition: background 0.3s ease;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
   }
+  body.dark textarea {
+    background: rgba(255,255,255,0.1);
+    color: #a0eee6;
+  }
   textarea::placeholder {
-    color: #c0ffff;
-    text-align: center;
+    color: #c0ffff; text-align: center;
   }
   textarea:focus {
     background: rgba(255,255,255,0.4);
     outline: none;
   }
   button {
-    width: 100%;
-    padding: 15px;
-    border-radius: 10px;
-    border: none;
-    background: #00ffc8;
-    color: #000;
-    font-weight: 700;
-    font-size: 1.2rem;
+    width: 100%; padding: 15px;
+    border-radius: 10px; border: none;
+    background: #00ffc8; color: #000;
+    font-weight: 700; font-size: 1.2rem;
     cursor: pointer;
     box-shadow: 0 4px 20px #00ffc8;
     transition: background 0.3s ease;
@@ -104,12 +87,9 @@
     box-shadow: 0 6px 25px #00bfa5;
   }
   .popup-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
+    display: none; justify-content: center; align-items: center;
     z-index: 2000;
   }
   .popup {
@@ -123,30 +103,27 @@
     position: relative;
     font-size: 1.1rem;
     margin-top: 60px;
+    animation: popupIn 0.3s ease forwards;
+  }
+  @keyframes popupIn {
+    from {opacity: 0; transform: translateY(-30px);}
+    to {opacity: 1; transform: translateY(0);}
   }
   .popup h2 {
     margin-top: 0;
     text-shadow: 0 0 8px #00ffc8;
   }
-  .popup .close-btn {
-    position: absolute;
-    top: 12px;
-    right: 15px;
-    font-size: 1.5rem;
-    color: #00ffc8;
-    cursor: pointer;
-    font-weight: 700;
+  .close-btn {
+    position: absolute; top: 12px; right: 15px;
+    font-size: 1.5rem; color: #00ffc8;
+    cursor: pointer; font-weight: 700;
     user-select: none;
   }
   footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    padding: 12px 0;
+    position: fixed; bottom: 0; width: 100%;
+    text-align: center; padding: 12px 0;
     background: rgba(13, 50, 77, 0.95);
-    color: #00ffc8;
-    font-size: 1rem;
+    color: #00ffc8; font-size: 1rem;
     font-weight: 900;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-shadow: 0 -4px 20px #00ffc8;
@@ -213,6 +190,32 @@
     background-color: #00bfa5;
     color: #000;
   }
+  /* Giriş/kayıt formları inputları */
+  input[type=text], input[type=email], input[type=password], input[type=tel] {
+    width: 100%; padding: 8px 10px;
+    border-radius: 6px; margin-bottom: 12px;
+    border: none;
+    font-size: 1rem;
+  }
+  body.dark input[type=text], body.dark input[type=email], body.dark input[type=password], body.dark input[type=tel] {
+    background: #222; color: #ccc;
+  }
+  /* Tema butonu */
+  #theme-toggle-btn {
+    margin-left: 20px;
+    background: transparent;
+    border: 2px solid #00ffc8;
+    color: #00ffc8;
+    padding: 6px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s ease;
+  }
+  #theme-toggle-btn:hover {
+    background: #00ffc8;
+    color: #000;
+  }
 </style>
 </head>
 <body>
@@ -239,6 +242,8 @@
       </div>
     </div>
   </div>
+
+  <button id="theme-toggle-btn" title="Tema değiştir">Karanlık Tema</button>
 </nav>
 
 <img src="logo.png" alt="HYYazılım Logo" class="logo" />
@@ -263,9 +268,7 @@
 </footer>
 
 <script>
-  const popupOverlay = document.getElementById('popup-overlay');
-  const popupText = document.getElementById('popup-text');
-
+  // İçerikler popup için
   const contents = {
     hakkimda: `
       <h2>👤 Hakkımda</h2>
@@ -325,172 +328,205 @@
     `
   };
 
-  // Açılır menüyü göster/gizle
-  function toggleDropdown(e) {
-    e.stopPropagation();
-    const dropdown = document.getElementById('user-dropdown');
-    dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+  // Popup açma/kapama
+  const popupOverlay = document.getElementById('popup-overlay');
+  const popupText = document.getElementById('popup-text');
+  function openPopup(name) {
+    if(name === 'basvurular') {
+      loadBasvurular();
+    }
+    if(name === 'profil') {
+      loadProfile();
+    }
+    popupText.innerHTML = contents[name] || '';
+    popupOverlay.style.display = 'flex';
   }
-  document.addEventListener('click', () => {
-    const dropdown = document.getElementById('user-dropdown');
-    if(dropdown) dropdown.style.display = 'none';
-  });
-
-  // Popup aç
-  function openPopup(key) {
-    if(key === 'login') {
-      popupText.innerHTML = contents.loginForm;
-      popupOverlay.style.display = 'flex';
-      return;
-    }
-    if(key === 'register') {
-      popupText.innerHTML = contents.registerForm;
-      popupOverlay.style.display = 'flex';
-      return;
-    }
-    if(contents[key]) {
-      popupText.innerHTML = contents[key];
-      popupOverlay.style.display = 'flex';
-      if(key === 'profil') loadProfile();
-      if(key === 'basvurular') loadBasvurular();
-    }
-  }
-
-  // Popup kapa
   function closePopup() {
     popupOverlay.style.display = 'none';
+    hideDropdown();
   }
 
-  // Kullanıcı bilgileri (localStorage kullanıyoruz)
-  let currentUser = null;
-
-  // Giriş yap
-  function login() {
-    const user = document.getElementById('login-user').value.trim();
-    const pass = document.getElementById('login-pass').value;
-    const users = JSON.parse(localStorage.getItem('users') || '{}');
-    if(users[user] && users[user].password === pass) {
-      currentUser = user;
-      updateUI();
-      closePopup();
-      alert('Giriş başarılı! Hoşgeldin, ' + user);
-    } else {
-      alert('Kullanıcı adı veya şifre yanlış.');
+  // Başvuruları yükle ve göster
+  function loadBasvurular() {
+    const list = document.getElementById('basvuru-list');
+    const basvurular = JSON.parse(localStorage.getItem('basvurular') || '[]');
+    if(basvurular.length === 0) {
+      list.innerHTML = '<li style="color:#f00; font-weight:700;">Hiç başvurunuz yok.</li>';
+      return;
+    }
+    list.innerHTML = basvurular.map(b => 
+      `<li style="margin-bottom:8px; border-bottom: 1px solid #00bfa5; padding-bottom: 4px;">
+        <strong>${b.user}</strong><br><small>${b.time}</small><br>${b.text}
+      </li>`
+    ).join('');
+  }
+  // Başvuruları temizle
+  function clearBasvurular() {
+    if(confirm('Tüm başvurularınız silinecek. Emin misiniz?')) {
+      localStorage.removeItem('basvurular');
+      loadBasvurular();
     }
   }
 
-  // Kayıt ol
+  // Form gönderimi ve localStorage kaydı
+  function saveBasvuru(event) {
+    // Boşsa engelle
+    const istek = event.target.istek.value.trim();
+    if(!istek) {
+      alert('Lütfen istek alanını doldurun.');
+      event.preventDefault();
+      return;
+    }
+    // localStorage'a ekle
+    let basvurular = JSON.parse(localStorage.getItem('basvurular') || '[]');
+    basvurular.push({
+      text: istek,
+      user: currentUser ? currentUser.username : 'Ziyaretçi',
+      time: new Date().toLocaleString()
+    });
+    localStorage.setItem('basvurular', JSON.stringify(basvurular));
+    // Form gönderimine izin ver (Formspree'ye)
+    // NOT: event.preventDefault() yok burada!
+    alert('Başvurunuz kaydedildi ve gönderildi. Teşekkürler!');
+    event.target.reset();
+  }
+
+  // Kullanıcı yönetimi (basit localStorage tabanlı)
+  let currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+
+  function showAuthForm(type) {
+    popupText.innerHTML = (type === 'login') ? contents.loginForm : contents.registerForm;
+    popupOverlay.style.display = 'flex';
+  }
+
   function register() {
     const user = document.getElementById('register-user').value.trim();
     const email = document.getElementById('register-email').value.trim();
-    const pass = document.getElementById('register-pass').value;
-    let users = JSON.parse(localStorage.getItem('users') || '{}');
-    if(users[user]) {
+    const pass = document.getElementById('register-pass').value.trim();
+    if(!user || !email || !pass) {
+      alert('Lütfen tüm alanları doldurun.');
+      return;
+    }
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    if(users.some(u => u.username.toLowerCase() === user.toLowerCase())) {
       alert('Bu kullanıcı adı zaten alınmış.');
       return;
     }
-    users[user] = {email: email, password: pass, telefon: ''};
+    users.push({username: user, email: email, password: pass});
     localStorage.setItem('users', JSON.stringify(users));
-    alert('Kayıt başarılı! Lütfen giriş yapınız.');
-    openPopup('login');
+    alert('Kayıt başarılı! Giriş yapabilirsiniz.');
+    openPopup('loginForm');
   }
 
-  // Profil yükle
-  function loadProfile() {
-    if(!currentUser) return;
-    let users = JSON.parse(localStorage.getItem('users') || '{}');
-    if(users[currentUser]) {
-      document.getElementById('profile-username').value = currentUser;
-      document.getElementById('profile-email').value = users[currentUser].email || '';
-      document.getElementById('profile-telefon').value = users[currentUser].telefon || '';
-      document.getElementById('profile-pass').value = '';
+  function login() {
+    const user = document.getElementById('login-user').value.trim();
+    const pass = document.getElementById('login-pass').value.trim();
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    const found = users.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass);
+    if(!found) {
+      alert('Kullanıcı adı veya şifre hatalı.');
+      return;
     }
-  }
-
-  // Profil güncelle
-  function updateProfile() {
-    if(!currentUser) return alert('Giriş yapılmamış.');
-    let users = JSON.parse(localStorage.getItem('users') || '{}');
-    if(!users[currentUser]) return alert('Kullanıcı bulunamadı.');
-    users[currentUser].email = document.getElementById('profile-email').value.trim();
-    users[currentUser].telefon = document.getElementById('profile-telefon').value.trim();
-    const newPass = document.getElementById('profile-pass').value;
-    if(newPass.length > 0) {
-      users[currentUser].password = newPass;
-    }
-    localStorage.setItem('users', JSON.stringify(users));
-    alert('Profil güncellendi!');
+    currentUser = found;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    alert('Hoşgeldin, ' + currentUser.username);
+    updateUIAfterLogin();
     closePopup();
-    updateUI();
   }
 
-  // Çıkış yap
   function logout() {
-    currentUser = null;
-    updateUI();
-    alert('Çıkış yapıldı.');
+    if(confirm('Çıkış yapmak istediğine emin misin?')) {
+      currentUser = null;
+      localStorage.removeItem('currentUser');
+      updateUIAfterLogin();
+    }
   }
 
-  // UI güncelle
-  function updateUI() {
+  function updateUIAfterLogin() {
     const authLinks = document.getElementById('auth-links');
     const userMenu = document.getElementById('user-menu');
-    const usernameDisplay = document.getElementById('username-display');
-
     if(currentUser) {
       authLinks.style.display = 'none';
       userMenu.style.display = 'flex';
-      usernameDisplay.textContent = currentUser;
+      document.getElementById('username-display').textContent = currentUser.username;
     } else {
       authLinks.style.display = 'flex';
       userMenu.style.display = 'none';
-      usernameDisplay.textContent = '';
     }
   }
 
-  // Başvuruları kaydet ve yükle (localStorage)
-  function saveBasvuru(e) {
-    e.preventDefault();
-    const form = e.target;
-    const istek = form.istek.value.trim();
+  // Profil yükle ve güncelle
+  function loadProfile() {
     if(!currentUser) {
-      alert('Lütfen önce giriş yapın.');
+      alert('Önce giriş yapmalısınız.');
+      closePopup();
       return;
     }
-    let basvurular = JSON.parse(localStorage.getItem('basvurular') || '{}');
-    if(!basvurular[currentUser]) basvurular[currentUser] = [];
-    basvurular[currentUser].push({tarih: new Date().toLocaleString(), icerik: istek});
-    localStorage.setItem('basvurular', JSON.stringify(basvurular));
-    alert('Başvurunuz kaydedildi!');
-    form.reset();
+    document.getElementById('profile-username').value = currentUser.username;
+    document.getElementById('profile-email').value = currentUser.email || '';
+    document.getElementById('profile-telefon').value = currentUser.phone || '';
+    document.getElementById('profile-pass').value = '';
   }
 
-  function loadBasvurular() {
-    if(!currentUser) return alert('Lütfen giriş yapın.');
-    let basvurular = JSON.parse(localStorage.getItem('basvurular') || '{}');
-    const listEl = document.getElementById('basvuru-list');
-    listEl.innerHTML = '';
-    if(basvurular[currentUser] && basvurular[currentUser].length > 0) {
-      basvurular[currentUser].forEach(b => {
-        const li = document.createElement('li');
-        li.textContent = `[${b.tarih}] - ${b.icerik}`;
-        listEl.appendChild(li);
-      });
-    } else {
-      listEl.textContent = 'Henüz başvurunuz yok.';
+  function updateProfile() {
+    const email = document.getElementById('profile-email').value.trim();
+    const phone = document.getElementById('profile-telefon').value.trim();
+    const pass = document.getElementById('profile-pass').value.trim();
+    if(!email) {
+      alert('E-posta boş olamaz.');
+      return;
     }
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    const index = users.findIndex(u => u.username === currentUser.username);
+    if(index === -1) {
+      alert('Kullanıcı bulunamadı.');
+      return;
+    }
+    users[index].email = email;
+    users[index].phone = phone;
+    if(pass) users[index].password = pass;
+    localStorage.setItem('users', JSON.stringify(users));
+    currentUser = users[index];
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    alert('Profil güncellendi!');
+    closePopup();
+    updateUIAfterLogin();
   }
 
-  function clearBasvurular() {
-    if(!currentUser) return alert('Lütfen giriş yapın.');
-    let basvurular = JSON.parse(localStorage.getItem('basvurular') || '{}');
-    basvurular[currentUser] = [];
-    localStorage.setItem('basvurular', JSON.stringify(basvurular));
-    loadBasvurular();
+  // Dropdown aç kapa
+  function toggleDropdown(e) {
+    e.stopPropagation();
+    const dropdown = document.getElementById('user-dropdown');
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
   }
+  function hideDropdown() {
+    const dropdown = document.getElementById('user-dropdown');
+    if(dropdown) dropdown.style.display = 'none';
+  }
+  document.addEventListener('click', hideDropdown);
 
-  // İlk açılışta UI güncelle
-  updateUI();
+  // Tema değiştirici
+  const themeBtn = document.getElementById('theme-toggle-btn');
+  function setTheme(dark) {
+    if(dark) {
+      document.body.classList.add('dark');
+      themeBtn.textContent = 'Açık Tema';
+    } else {
+      document.body.classList.remove('dark');
+      themeBtn.textContent = 'Karanlık Tema';
+    }
+    localStorage.setItem('darkTheme', dark ? '1' : '0');
+  }
+  themeBtn.onclick = () => {
+    const darkNow = document.body.classList.contains('dark');
+    setTheme(!darkNow);
+  };
+  // Sayfa yüklenince tema ayarla
+  window.onload = () => {
+    updateUIAfterLogin();
+    const darkPref = localStorage.getItem('darkTheme');
+    setTheme(darkPref === '1');
+  };
 </script>
 
 </body>
