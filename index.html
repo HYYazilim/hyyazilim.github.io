@@ -1,225 +1,287 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HY Yazılım - Giriş / Kayıt</title>
-  <style>
-    :root {
-      --bg-color: #e0f7fa;
-      --text-color: #000;
-      --card-bg: #ffffff;
-      --accent: #00bcd4;
-    }
-    [data-theme="dark"] {
-      --bg-color: #121212;
-      --text-color: #fff;
-      --card-bg: #1e1e1e;
-      --accent: #00e5ff;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", sans-serif;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: all 0.4s ease;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1rem;
-    }
-
-    header {
-      text-align: center;
-      padding: 2rem 1rem;
-      background: var(--accent);
-      color: #fff;
-      width: 100%;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      border-radius: 15px;
-      margin-bottom: 2rem;
-    }
-
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    header p {
-      font-size: 1.1rem;
-    }
-
-    .dark-toggle {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      background: var(--card-bg);
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      font-size: 1.5rem;
-      line-height: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--accent);
-      transition: background 0.3s ease;
-    }
-    .dark-toggle:hover {
-      background: var(--accent);
-      color: var(--card-bg);
-    }
-
-    .container {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-      max-width: 1000px;
-      width: 100%;
-      padding: 1rem;
-      box-sizing: border-box;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-      width: 320px;
-      transition: transform 0.3s ease;
-      animation: fadeIn 0.8s ease-in-out;
-    }
-
-    .card:hover {
-      transform: translateY(-10px);
-    }
-
-    .card h2 {
-      margin-bottom: 1rem;
-      font-size: 1.6rem;
-      color: var(--accent);
-    }
-
-    .card input {
-      width: 100%;
-      padding: 0.7rem;
-      margin: 0.5rem 0 1rem 0;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      background: var(--card-bg);
-      color: var(--text-color);
-    }
-
-    .card input::placeholder {
-      color: #999;
-    }
-
-    .card button {
-      width: 100%;
-      padding: 0.7rem;
-      border: none;
-      border-radius: 10px;
-      background: var(--accent);
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s;
-      font-size: 1rem;
-    }
-
-    .card button:hover {
-      background: #0097a7;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HY Yazılım - Giriş</title>
+<style>
+  :root {
+    --bg-color: #e0f7fa;
+    --text-color: #000;
+    --card-bg: #fff;
+    --accent: #00bcd4;
+    --accent-dark: #0097a7;
+  }
+  [data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #fff;
+    --card-bg: #1e1e1e;
+    --accent: #00e5ff;
+    --accent-dark: #007b91;
+  }
+  * {
+    margin:0; padding:0; box-sizing:border-box;
+    font-family:"Segoe UI", sans-serif;
+  }
+  body {
+    background: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    padding: 1rem;
+    transition: all 0.4s ease;
+  }
+  header {
+    background: var(--accent);
+    color: white;
+    text-align: center;
+    padding: 1.5rem 0;
+    font-size: 2.5rem;
+    font-weight: bold;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    margin-bottom: 1.5rem;
+    user-select: none;
+  }
+  .dark-toggle {
+    position: fixed;
+    top: 1rem; right: 1rem;
+    background: var(--card-bg);
+    border: none;
+    border-radius: 50%;
+    width: 40px; height: 40px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    font-size: 1.5rem;
+    color: var(--accent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s ease;
+    z-index: 100;
+  }
+  .dark-toggle:hover {
+    background: var(--accent);
+    color: var(--card-bg);
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    user-select: none;
+  }
+  nav button {
+    background: var(--accent);
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.3s ease;
+  }
+  nav button:hover {
+    background: var(--accent-dark);
+  }
+  main {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    width: 320px;
+    animation: fadeIn 0.5s ease forwards;
+  }
+  .card h2 {
+    margin-bottom: 1.2rem;
+    color: var(--accent);
+    text-align: center;
+  }
+  .card form input {
+    width: 100%;
+    padding: 0.7rem;
+    margin: 0.5rem 0 1.2rem 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  .card form button {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--accent);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .card form button:hover {
+    background: var(--accent-dark);
+  }
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+  }
+  .modal {
+    background: var(--card-bg);
+    max-width: 480px;
+    width: 90%;
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
+  }
+  .modal h2 {
+    margin-bottom: 1rem;
+    color: var(--accent);
+    user-select: none;
+  }
+  .modal p {
+    line-height: 1.4;
+  }
+  .modal-close {
+    position: absolute;
+    top: 10px; right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--accent);
+    font-weight: bold;
+  }
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+</style>
 </head>
 <body>
+<button class="dark-toggle" aria-label="Tema değiştir" title="Tema değiştir" onclick="toggleTheme()">🌓</button>
 
-  <button class="dark-toggle" aria-label="Tema değiştir" title="Tema değiştir" onclick="toggleTheme()">🌓</button>
+<header>HY Yazılım</header>
 
-  <header>
-    <h1>HY Yazılım</h1>
-    <p>Geleceği kodlayan platform. Hemen giriş yap veya kayıt ol!</p>
-  </header>
+<nav>
+  <button id="aboutBtn">Hakkımda</button>
+  <button id="contactBtn">İletişim</button>
+  <button id="projectsBtn">Projelerim</button>
+</nav>
 
-  <div class="container">
-    <div class="card">
-      <h2>Giriş Yap</h2>
-      <form id="loginForm">
-        <input type="text" id="loginUsername" name="username" placeholder="Kullanıcı Adı" required />
-        <input type="password" id="loginPassword" name="password" placeholder="Şifre" required />
-        <button type="submit">Giriş Yap</button>
-      </form>
-    </div>
-
-    <div class="card">
-      <h2>Kayıt Ol</h2>
-      <form id="registerForm">
-        <input type="text" id="registerUsername" name="new_username" placeholder="Yeni Kullanıcı Adı" required />
-        <input type="email" id="registerEmail" name="email" placeholder="E-posta" required />
-        <input type="password" id="registerPassword" name="new_password" placeholder="Şifre" required />
-        <button type="submit">Kayıt Ol</button>
-      </form>
-    </div>
+<main>
+  <div class="card">
+    <h2>Giriş Yap</h2>
+    <form id="loginForm">
+      <input type="text" name="username" placeholder="Kullanıcı Adı" required />
+      <input type="password" name="password" placeholder="Şifre" required />
+      <button type="submit">Giriş Yap</button>
+    </form>
   </div>
 
-  <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      const currentTheme = html.getAttribute('data-theme');
-      if(currentTheme === 'dark') {
-        html.removeAttribute('data-theme');
-        localStorage.setItem('theme', 'light');
-      } else {
-        html.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-      }
+  <div class="card">
+    <h2>Kayıt Ol</h2>
+    <form id="registerForm">
+      <input type="text" name="new_username" placeholder="Yeni Kullanıcı Adı" required />
+      <input type="email" name="email" placeholder="E-posta" required />
+      <input type="password" name="new_password" placeholder="Şifre" required />
+      <button type="submit">Kayıt Ol</button>
+    </form>
+  </div>
+</main>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal" role="document">
+    <button class="modal-close" aria-label="Kapat" onclick="closeModal()">×</button>
+    <h2 id="modalTitle"></h2>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    if(html.getAttribute('data-theme') === 'dark') {
+      html.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
     }
-
-    window.onload = () => {
-      const savedTheme = localStorage.getItem('theme');
-      if(savedTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
+  }
+  window.onload = function() {
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
     }
+  };
 
-    // Kayıt formu submit
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const email = document.getElementById('registerEmail').value.trim();
-      if(email) {
-        localStorage.setItem('userEmail', email);
-        alert('Kayıt başarılı! Başvuru formuna yönlendiriliyorsunuz...');
-        window.location.href = 'https://hyyazilim.github.io/basvuruformu.html';
-      }
-    });
+  // Modal açma
+  function showModal(title, content) {
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalBody').innerHTML = content;
+    document.getElementById('modalOverlay').style.display = 'flex';
+  }
 
-    // Giriş formu submit
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const email = localStorage.getItem('userEmail');
-      if(email) {
-        alert('Giriş başarılı! Başvuru formuna yönlendiriliyorsunuz...');
-        window.location.href = 'https://hyyazilim.github.io/basvuruformu.html';
-      } else {
-        alert('E-posta bulunamadı. Lütfen önce kayıt olun.');
-      }
-    });
-  </script>
+  // Modal kapatma
+  function closeModal() {
+    document.getElementById('modalOverlay').style.display = 'none';
+  }
+
+  document.getElementById('aboutBtn').addEventListener('click', () => {
+    showModal('Hakkımda', `
+      <p>HYYazılım olarak, bilgisayarınızda görmek istediğiniz özel yazılımları sizin ihtiyaçlarınıza göre geliştiriyoruz.
+Sitemize giriş yapıp başvuru formunu doldurduğunuzda, taleplerinizi inceleyip sizinle en kısa sürede iletişime geçiyoruz.
+Siz isteyin, biz kodlayalım.</p>
+    `);
+  });
+
+  document.getElementById('contactBtn').addEventListener('click', () => {
+    showModal('İletişim', `
+      <p>E-posta: <a href="mailto:hasanyusufyildiz35@gmail.com">hasanyusufyildiz35@gmail.com</a></p>
+      <p>Telefon: 0 555 163 18 50</p>
+    `);
+  });
+
+  document.getElementById('projectsBtn').addEventListener('click', () => {
+    showModal('Projelerim', `
+      <ul>
+        <li><a href="https://drive.google.com/uc?export=download&id=GOOGLE_DRIVE_FILE_ID_1" target="_blank" rel="noopener noreferrer">Proje 1 - HYController.exe</a></li>
+        <li><a href="https://drive.google.com/uc?export=download&id=GOOGLE_DRIVE_FILE_ID_2" target="_blank" rel="noopener noreferrer">Proje 2 - MesajlasmaUygulamasi.exe</a></li>
+      </ul>
+    `);
+  });
+
+  // Giriş formu
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Burada kullanıcı doğrulama yapılabilir. Şimdilik sadece örnek:
+    alert('Giriş yapıldı (örnek). Sonra basvuru sayfasına yönlendirilirsiniz.');
+    // Yönlendirme örneği:
+    // window.location.href = "basvuruformu.html";
+  });
+
+  // Kayıt formu
+  document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Burada kayıt işlemi yapılabilir. Şimdilik örnek:
+    alert('Kayıt başarılı (örnek).');
+    // Kayıt sonrası işlem yapılabilir.
+  });
+</script>
 </body>
 </html>
