@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HY Yazılım - Giriş</title>
+  <title>HY Yazılım - Giriş / Kayıt</title>
   <style>
     :root {
       --bg-color: #e0f7fa;
@@ -29,6 +29,11 @@
       background-color: var(--bg-color);
       color: var(--text-color);
       transition: all 0.4s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
     }
 
     header {
@@ -36,7 +41,10 @@
       padding: 2rem 1rem;
       background: var(--accent);
       color: #fff;
+      width: 100%;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      border-radius: 15px;
+      margin-bottom: 2rem;
     }
 
     header h1 {
@@ -48,14 +56,39 @@
       font-size: 1.1rem;
     }
 
+    .dark-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--card-bg);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      font-size: 1.5rem;
+      line-height: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--accent);
+      transition: background 0.3s ease;
+    }
+    .dark-toggle:hover {
+      background: var(--accent);
+      color: var(--card-bg);
+    }
+
     .container {
       display: flex;
       justify-content: center;
       gap: 2rem;
       flex-wrap: wrap;
-      margin: 3rem auto;
       max-width: 1000px;
+      width: 100%;
       padding: 1rem;
+      box-sizing: border-box;
     }
 
     .card {
@@ -63,7 +96,7 @@
       border-radius: 20px;
       padding: 2rem;
       box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-      width: 300px;
+      width: 320px;
       transition: transform 0.3s ease;
       animation: fadeIn 0.8s ease-in-out;
     }
@@ -84,6 +117,12 @@
       margin: 0.5rem 0 1rem 0;
       border: 1px solid #ccc;
       border-radius: 10px;
+      background: var(--card-bg);
+      color: var(--text-color);
+    }
+
+    .card input::placeholder {
+      color: #999;
     }
 
     .card button {
@@ -96,31 +135,11 @@
       font-weight: bold;
       cursor: pointer;
       transition: background 0.3s;
+      font-size: 1rem;
     }
 
     .card button:hover {
       background: #0097a7;
-    }
-
-    .dark-toggle {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      background: var(--card-bg);
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      background-color: var(--card-bg);
-      box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
     }
 
     @keyframes fadeIn {
@@ -131,7 +150,7 @@
 </head>
 <body>
 
-  <button class="dark-toggle" onclick="toggleTheme()">🌓</button>
+  <button class="dark-toggle" aria-label="Tema değiştir" title="Tema değiştir" onclick="toggleTheme()">🌓</button>
 
   <header>
     <h1>HY Yazılım</h1>
@@ -141,54 +160,66 @@
   <div class="container">
     <div class="card">
       <h2>Giriş Yap</h2>
-      <form action="https://formsubmit.co/997c2f2e7969192680824b8671a9aa04" method="POST">
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_next" value="https://hyyazilim.github.io/tesekkur.html" />
-        <input type="text" name="username" placeholder="Kullanıcı Adı" required />
-        <input type="password" name="password" placeholder="Şifre" required />
+      <form id="loginForm">
+        <input type="text" id="loginUsername" name="username" placeholder="Kullanıcı Adı" required />
+        <input type="password" id="loginPassword" name="password" placeholder="Şifre" required />
         <button type="submit">Giriş Yap</button>
       </form>
     </div>
 
     <div class="card">
       <h2>Kayıt Ol</h2>
-      <form action="https://formsubmit.co/997c2f2e7969192680824b8671a9aa04" method="POST">
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_next" value="https://hyyazilim.github.io/tesekkur.html" />
-        <input type="text" name="new_username" placeholder="Yeni Kullanıcı Adı" required />
-        <input type="email" name="email" placeholder="E-posta" required />
-        <input type="password" name="new_password" placeholder="Şifre" required />
+      <form id="registerForm">
+        <input type="text" id="registerUsername" name="new_username" placeholder="Yeni Kullanıcı Adı" required />
+        <input type="email" id="registerEmail" name="email" placeholder="E-posta" required />
+        <input type="password" id="registerPassword" name="new_password" placeholder="Şifre" required />
         <button type="submit">Kayıt Ol</button>
       </form>
     </div>
   </div>
 
-  <footer>
-    © 2025 HY Yazılım - Tüm Hakları Saklıdır.
-  </footer>
-
   <script>
     function toggleTheme() {
       const html = document.documentElement;
-      const theme = html.getAttribute("data-theme");
-      if (theme === "dark") {
-        html.removeAttribute("data-theme");
-        localStorage.setItem("theme", "light");
+      const currentTheme = html.getAttribute('data-theme');
+      if(currentTheme === 'dark') {
+        html.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
       } else {
-        html.setAttribute("data-theme", "dark");
-        localStorage.setItem("theme", "dark");
+        html.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
       }
     }
 
     window.onload = () => {
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "dark") {
-        document.documentElement.setAttribute("data-theme", "dark");
+      const savedTheme = localStorage.getItem('theme');
+      if(savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
       }
-    };
-  </script>
+    }
 
+    // Kayıt formu submit
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('registerEmail').value.trim();
+      if(email) {
+        localStorage.setItem('userEmail', email);
+        alert('Kayıt başarılı! Başvuru formuna yönlendiriliyorsunuz...');
+        window.location.href = 'https://hyyazilim.github.io/basvuruformu.html';
+      }
+    });
+
+    // Giriş formu submit
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = localStorage.getItem('userEmail');
+      if(email) {
+        alert('Giriş başarılı! Başvuru formuna yönlendiriliyorsunuz...');
+        window.location.href = 'https://hyyazilim.github.io/basvuruformu.html';
+      } else {
+        alert('E-posta bulunamadı. Lütfen önce kayıt olun.');
+      }
+    });
+  </script>
 </body>
 </html>

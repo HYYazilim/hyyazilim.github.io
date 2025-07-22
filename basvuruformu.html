@@ -6,100 +6,126 @@
   <title>Başvuru Formu - HY Yazılım</title>
   <style>
     :root {
-      --accent: #00bcd4;
       --bg-color: #e0f7fa;
       --text-color: #000;
       --card-bg: #ffffff;
+      --accent: #00bcd4;
     }
-
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #fff;
+      --card-bg: #1e1e1e;
+      --accent: #00e5ff;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
     body {
-      margin: 0;
-      padding: 0;
-      background: var(--bg-color);
-      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       min-height: 100vh;
+      padding: 1rem;
+      transition: all 0.4s ease;
     }
-
+    header {
+      background: var(--accent);
+      width: 100%;
+      padding: 1.5rem 0;
+      text-align: center;
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+      margin-bottom: 2rem;
+    }
     .card {
       background: var(--card-bg);
-      padding: 2.5rem;
+      padding: 2rem;
       border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
       width: 350px;
-      text-align: center;
-      animation: fadeIn 1s ease forwards;
+      animation: fadeIn 0.8s ease forwards;
     }
-
-    h1 {
-      color: var(--accent);
-      margin-bottom: 1.5rem;
-    }
-
     label {
       display: block;
-      text-align: left;
-      margin: 1rem 0 0.3rem;
+      margin-top: 1rem;
       font-weight: 600;
-      color: var(--text-color);
+      text-align: left;
     }
-
-    textarea, input {
+    input, textarea {
       width: 100%;
       padding: 0.7rem;
       border-radius: 10px;
       border: 1px solid #ccc;
       font-size: 1rem;
       box-sizing: border-box;
+      margin-top: 0.3rem;
       resize: vertical;
+      background: var(--card-bg);
+      color: var(--text-color);
     }
-
-    textarea:focus, input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 5px var(--accent);
+    input::placeholder, textarea::placeholder {
+      color: #999;
     }
-
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.9rem;
+      border-radius: 12px;
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #0097a7;
+    }
     .email-display {
       font-weight: bold;
       color: var(--accent);
       margin-bottom: 1rem;
       text-align: left;
     }
-
-    button {
-      margin-top: 1.5rem;
-      width: 100%;
-      background: var(--accent);
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .dark-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--card-bg);
       border: none;
-      padding: 0.9rem;
-      border-radius: 12px;
-      font-weight: bold;
-      color: white;
-      font-size: 1.1rem;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
       cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      font-size: 1.5rem;
+      color: var(--accent);
+      display: flex;
+      justify-content: center;
+      align-items: center;
       transition: background 0.3s ease;
     }
-
-    button:hover {
-      background: #0097a7;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .dark-toggle:hover {
+      background: var(--accent);
+      color: var(--card-bg);
     }
   </style>
 </head>
 <body>
+  <button class="dark-toggle" aria-label="Tema değiştir" title="Tema değiştir" onclick="toggleTheme()">🌓</button>
+  <header>HY Yazılım</header>
+
   <div class="card">
     <h1>Başvuru Formu</h1>
 
@@ -122,15 +148,29 @@
   </div>
 
   <script>
-    const email = localStorage.getItem('userEmail');
-
-    if(email) {
-      document.getElementById('userEmail').textContent = email;
-      document.getElementById('hiddenEmail').value = email;
-    } else {
-      document.getElementById('userEmail').textContent = "E-posta bilgisi bulunamadı. Lütfen giriş yapınız.";
-      // İstersen formu gizleyebilir veya kullanıcıyı başka sayfaya yönlendirebilirsin.
+    function toggleTheme() {
+      const html = document.documentElement;
+      if(html.getAttribute('data-theme') === 'dark') {
+        html.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
     }
+    window.onload = () => {
+      if(localStorage.getItem('theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+      // Kullanıcı e-postasını localStorage'dan al
+      const email = localStorage.getItem('userEmail');
+      if(email) {
+        document.getElementById('userEmail').textContent = email;
+        document.getElementById('hiddenEmail').value = email;
+      } else {
+        document.getElementById('userEmail').textContent = "E-posta bilgisi bulunamadı. Lütfen giriş yapınız.";
+      }
+    };
   </script>
 </body>
 </html>
