@@ -29,6 +29,9 @@
     min-height: 100vh;
     padding: 1rem;
     transition: all 0.4s ease;
+    display: flex; /* Merkezleme için eklendi */
+    flex-direction: column; /* Merkezleme için eklendi */
+    align-items: center; /* Merkezleme için eklendi */
   }
   header {
     background: var(--accent);
@@ -39,7 +42,9 @@
     font-weight: bold;
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem; /* Azaltıldı */
+    width: 100%;
+    max-width: 900px; /* Eklendi */
     user-select: none;
   }
   .dark-toggle {
@@ -63,13 +68,40 @@
     background: var(--accent);
     color: var(--card-bg);
   }
+  .user-profile-menu {
+    text-align: right;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    position: relative;
+  }
+  .user-profile-menu span {
+    background: var(--card-bg);
+    color: var(--accent);
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    user-select: none;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .user-profile-menu span:hover {
+    background: var(--accent);
+    color: white;
+  }
   nav {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem; /* Artırıldı */
     flex-wrap: wrap;
     user-select: none;
+    width: 100%;
+    max-width: 900px;
   }
   nav button {
     background: var(--accent);
@@ -85,9 +117,15 @@
   nav button.active, nav button:hover {
     background: var(--accent-dark);
   }
+  main {
+    width: 100%;
+    display: flex; /* İçerik için eklendi */
+    justify-content: center; /* İçerik için eklendi */
+  }
   main > section {
     display: none;
     max-width: 550px;
+    width: 100%; /* Eklendi */
     margin: 0 auto;
     animation: fadeIn 0.5s ease forwards;
   }
@@ -143,10 +181,11 @@
     margin-bottom: 1rem;
     text-align: left;
     user-select: text;
+    word-break: break-all; /* Uzun e-postalar için */
   }
   ul.project-list {
     list-style: none;
-    padding-left: 1rem;
+    padding-left: 0; /* Kaldırıldı */
   }
   ul.project-list li {
     margin: 0.7rem 0;
@@ -159,10 +198,12 @@
   ul.project-list a:hover {
     text-decoration: underline;
   }
-  .profile-form label.error, .form-error {
+  .form-error {
     color: red;
     font-weight: 600;
     font-size: 0.9rem;
+    margin-top: 0.5rem; /* Boşluk eklendi */
+    display: none;
   }
   /* Modal */
   .modal-overlay {
@@ -187,11 +228,26 @@
   .modal h2 {
     margin-bottom: 1rem;
     color: var(--accent);
+    text-align: center; /* Ortalandı */
     user-select: none;
   }
   .modal p, .modal ul {
     margin-bottom: 1rem;
     line-height: 1.4;
+  }
+  .modal ul {
+    list-style: none; /* Varsayılan nokta kaldırıldı */
+    padding-left: 0; /* Sol boşluk kaldırıldı */
+  }
+  .modal ul li a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    display: block; /* Tam alanı kapsar */
+    padding: 0.5rem 0;
+  }
+  .modal ul li a:hover {
+    text-decoration: underline;
   }
   .modal-close {
     position: absolute;
@@ -205,19 +261,23 @@
     user-select: none;
   }
   .old-requests {
-    max-height: 150px;
+    max-height: 200px; /* Biraz artırıldı */
     overflow-y: auto;
-    background: #f5f5f5;
+    background: var(--bg-color); /* Tema uyumu */
     padding: 0.8rem 1rem;
     border-radius: 12px;
     margin-top: 0.8rem;
     font-size: 0.9rem;
-    color: #333;
+    color: var(--text-color); /* Tema uyumu */
+    border: 1px solid var(--accent); /* Eklendi */
   }
   .old-requests > div {
     border-bottom: 1px solid #ddd;
     padding-bottom: 0.5rem;
     margin-bottom: 0.5rem;
+  }
+  .old-requests > div:last-child {
+    border-bottom: none; /* Son öğede çizgi olmasın */
   }
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px);}
@@ -230,16 +290,18 @@
 
 <header>HY Yazılım</header>
 
+<div class="user-profile-menu" id="userMenuBtn" role="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Profil ve Başvurular Menüsü">
+  <span><span id="displayUserName"></span> &darr;</span>
+</div>
+
 <nav>
   <button class="active" data-tab="form">Başvuru Formu</button>
   <button data-tab="projects">Projelerim</button>
-  <button data-tab="profile">Profilimi Düzenle</button>
   <button data-tab="about">Hakkımda</button>
   <button data-tab="contact">İletişim</button>
 </nav>
 
 <main>
-  <!-- Başvuru Formu -->
   <section id="form" class="active">
     <form id="basvuruForm" action="https://formsubmit.co/hasanyusufyildiz35@gmail.com" method="POST" novalidate>
       <input type="hidden" name="_captcha" value="false" />
@@ -251,22 +313,16 @@
       
       <label for="message">İsteğiniz / Başvurunuz <span style="color: red;">*</span></label>
       <textarea id="message" name="message" rows="5" placeholder="İstediğiniz şeyi buraya yazın..." required></textarea>
+      <div class="form-error" id="messageError">Lütfen başvurunuzu yazınız.</div>
 
       <label for="phone">Telefon Numaranız (Opsiyonel)</label>
       <input type="tel" id="phone" name="phone" placeholder="Telefon numaranız" />
-
-      <div class="form-error" id="phoneError" style="display:none;">Telefon numarası geçersiz. 10 haneli ve 5 ile başlamalı.</div>
+      <div class="form-error" id="phoneError">Telefon numarası geçersiz. 10 haneli ve 5 ile başlamalı.</div>
 
       <button type="submit" class="submit-btn">Başvuruyu Gönder</button>
     </form>
-
-    <h3 style="margin-top:2rem;">Önceki Başvurularınız</h3>
-    <div class="old-requests" id="oldRequests">
-      <em>Henüz başvuru yok.</em>
-    </div>
   </section>
 
-  <!-- Projelerim -->
   <section id="projects">
     <h2>Projelerim</h2>
     <ul class="project-list">
@@ -275,30 +331,42 @@
     </ul>
   </section>
 
-  <!-- Profilimi Düzenle -->
   <section id="profile">
     <h2>Profilimi Düzenle</h2>
     <form id="profileForm" class="profile-form" novalidate>
       <label for="profileName">İsim <span style="color: red;">*</span></label>
       <input type="text" id="profileName" name="profileName" placeholder="Adınız" required />
+      <div class="form-error" id="profileNameError">İsim alanı boş bırakılamaz.</div>
+
       <label for="profileSurname">Soyisim <span style="color: red;">*</span></label>
       <input type="text" id="profileSurname" name="profileSurname" placeholder="Soyadınız" required />
+      <div class="form-error" id="profileSurnameError">Soyisim alanı boş bırakılamaz.</div>
+
       <label for="profileEmail">E-posta <span style="color: red;">*</span></label>
       <input type="email" id="profileEmail" name="profileEmail" placeholder="E-posta adresiniz" required />
+      <div class="form-error" id="profileEmailError">Geçerli bir e-posta adresi giriniz.</div>
+
       <label for="profilePhone">Telefon Numaranız (10 haneli, 5 ile başlamalı) <span style="color: red;">*</span></label>
       <input type="text" id="profilePhone" name="profilePhone" maxlength="10" placeholder="örn. 5551631850" required pattern="^5\d{9}$" />
-      <div id="phoneErrorProfile" class="form-error" style="display:none;">Lütfen 10 haneli, 5 ile başlayan telefon numarası girin.</div>
+      <div id="phoneErrorProfile" class="form-error">Lütfen 10 haneli, 5 ile başlayan telefon numarası girin.</div>
+      
       <button type="submit" class="submit-btn">Kaydet</button>
     </form>
   </section>
+
+  <section id="oldRequestsView">
+    <h2>Önceki Başvurularınız</h2>
+    <div class="old-requests" id="oldRequests">
+      <em>Henüz başvuru yok.</em>
+    </div>
+  </section>
 </main>
 
-<!-- Modal Yapısı -->
 <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
   <div class="modal" id="modalContent">
     <button class="modal-close" id="modalClose" aria-label="Kapat">×</button>
-    <h2 id="modalTitle">Başlık</h2>
-    <div id="modalBody">İçerik</div>
+    <h2 id="modalTitle"></h2>
+    <div id="modalBody"></div>
   </div>
 </div>
 
@@ -315,9 +383,23 @@
     }
   }
 
+  // Tüm aktif bölümleri ve navigasyon düğmelerini sıfırla
+  function resetActiveStates() {
+    document.querySelectorAll('main > section').forEach(sec => sec.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+  }
+
   window.onload = () => {
     if(localStorage.getItem('theme') === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    // Kullanıcı adını göster
+    const storedUserName = localStorage.getItem('userName') || localStorage.getItem('kullaniciadi'); // Hem profil hem de kayıt ismini dene
+    if(storedUserName) {
+      document.getElementById('displayUserName').textContent = storedUserName;
+    } else {
+      document.getElementById('displayUserName').textContent = "Misafir"; // Varsayılan değer
     }
 
     // Email göster
@@ -326,25 +408,23 @@
       document.getElementById('userEmail').textContent = email;
       document.getElementById('hiddenEmail').value = email;
     } else {
-      document.getElementById('userEmail').textContent = "E-posta bilgisi bulunamadı. Lütfen giriş yapınız.";
+      document.getElementById('userEmail').textContent = "E-posta bilgisi bulunamadı. Lütfen ana sayfadan giriş yapınız.";
+      // Opsiyonel: Eğer e-posta yoksa formu gizleyebilir veya giriş sayfasına yönlendirebilirsin.
     }
 
     // Profil verilerini yükle
-    const name = localStorage.getItem('userName');
-    const surname = localStorage.getItem('userSurname');
-    const profileEmail = localStorage.getItem('userEmail');
-    const phone = localStorage.getItem('userPhone');
-
-    if(name) document.getElementById('profileName').value = name;
-    if(surname) document.getElementById('profileSurname').value = surname;
-    if(profileEmail) document.getElementById('profileEmail').value = profileEmail;
-    if(phone) document.getElementById('profilePhone').value = phone;
+    loadProfileData();
 
     // Başvuru kayıtlarını yükle
     loadOldRequests();
 
     // Tabları hazırla
     setupTabs();
+
+    // Kullanıcı menüsü butonu click event'i
+    document.getElementById('userMenuBtn').addEventListener('click', () => {
+      showUserModal();
+    });
 
     // Modal kapatma
     document.getElementById('modalClose').addEventListener('click', closeModal);
@@ -354,55 +434,93 @@
 
     // Başvuru formu submit kontrolü
     document.getElementById('basvuruForm').addEventListener('submit', function(e) {
+      const messageInput = document.getElementById('message').value.trim();
       const phoneInput = document.getElementById('phone').value.trim();
+      const messageError = document.getElementById('messageError');
       const phoneError = document.getElementById('phoneError');
+      
+      messageError.style.display = 'none';
       phoneError.style.display = 'none';
 
+      let isValid = true;
+
+      if (messageInput.length === 0) {
+        messageError.style.display = 'block';
+        isValid = false;
+      }
+
       if(phoneInput.length > 0) {
-        // Telefon numarası 10 hane ve 5 ile başlamalı
         const valid = /^5\d{9}$/.test(phoneInput);
         if(!valid) {
-          e.preventDefault();
           phoneError.style.display = 'block';
-          return false;
+          isValid = false;
         }
       }
-      // Kayıt eski başvuruları localStorage'a ekle
+      
+      if (!isValid) {
+        e.preventDefault(); // Formu gönderme
+        return false;
+      }
+      
+      // Geçerliyse, eski başvuruları localStorage'a ekle
       saveRequest();
     });
 
     // Profil form kontrolü
     document.getElementById('profileForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const profilePhone = document.getElementById('profilePhone').value.trim();
+      
+      const profileName = document.getElementById('profileName');
+      const profileSurname = document.getElementById('profileSurname');
+      const profileEmail = document.getElementById('profileEmail');
+      const profilePhone = document.getElementById('profilePhone');
+
+      const profileNameError = document.getElementById('profileNameError');
+      const profileSurnameError = document.getElementById('profileSurnameError');
+      const profileEmailError = document.getElementById('profileEmailError');
       const phoneErrorProfile = document.getElementById('phoneErrorProfile');
+
+      // Tüm hata mesajlarını sıfırla
+      profileNameError.style.display = 'none';
+      profileSurnameError.style.display = 'none';
+      profileEmailError.style.display = 'none';
       phoneErrorProfile.style.display = 'none';
 
-      const profileName = document.getElementById('profileName').value.trim();
-      const profileSurname = document.getElementById('profileSurname').value.trim();
-      const profileEmail = document.getElementById('profileEmail').value.trim();
+      let isValid = true;
 
-      if(!profileName || !profileSurname) {
-        alert("Lütfen isim ve soyisim giriniz.");
-        return false;
+      if (profileName.value.trim() === "") {
+        profileNameError.style.display = 'block';
+        isValid = false;
       }
-      if(!profileEmail || !validateEmail(profileEmail)) {
-        alert("Geçerli bir e-posta adresi giriniz.");
-        return false;
+      if (profileSurname.value.trim() === "") {
+        profileSurnameError.style.display = 'block';
+        isValid = false;
       }
-      if(!/^5\d{9}$/.test(profilePhone)) {
+      if (!validateEmail(profileEmail.value.trim())) {
+        profileEmailError.style.display = 'block';
+        isValid = false;
+      }
+      if (!/^5\d{9}$/.test(profilePhone.value.trim())) {
         phoneErrorProfile.style.display = 'block';
+        isValid = false;
+      }
+      
+      if (!isValid) {
         return false;
       }
+
       // Kaydet
-      localStorage.setItem('userName', profileName);
-      localStorage.setItem('userSurname', profileSurname);
-      localStorage.setItem('userEmail', profileEmail);
-      localStorage.setItem('userPhone', profilePhone);
-      alert("Profil bilgileriniz kaydedildi!");
+      localStorage.setItem('userName', profileName.value.trim());
+      localStorage.setItem('userSurname', profileSurname.value.trim());
+      localStorage.setItem('userEmail', profileEmail.value.trim());
+      localStorage.setItem('userPhone', profilePhone.value.trim());
+      
+      alert("Profil bilgileriniz başarıyla kaydedildi!");
+      
       // Email güncelle
-      document.getElementById('userEmail').textContent = profileEmail;
-      document.getElementById('hiddenEmail').value = profileEmail;
+      document.getElementById('userEmail').textContent = profileEmail.value.trim();
+      document.getElementById('hiddenEmail').value = profileEmail.value.trim();
+      document.getElementById('displayUserName').textContent = profileName.value.trim(); // Kullanıcı adını da güncelle
     });
   };
 
@@ -419,14 +537,15 @@
 
     buttons.forEach(btn => {
       btn.addEventListener('click', () => {
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        resetActiveStates(); // Tüm aktiflikleri sıfırla
+        btn.classList.add('active'); // Sadece tıklananı aktif yap
+
         const target = btn.getAttribute('data-tab');
         sections.forEach(sec => {
           if(sec.id === target) sec.classList.add('active');
-          else sec.classList.remove('active');
         });
 
+        // Hakkımızda ve İletişim modal olarak kalsın
         if(target === 'about') {
           showModal("Hakkımızda", `
             <p>HYYazılım olarak, bilgisayarınızda görmek istediğiniz özel yazılımları sizin ihtiyaçlarınıza göre geliştiriyoruz.
@@ -444,18 +563,71 @@ Siz isteyin, biz kodlayalım.</p>
     });
   }
 
-  // Modal açma
+  // Kullanıcı menüsü modalını göster
+  function showUserModal() {
+    document.getElementById('modalTitle').textContent = "Profilim ve İşlemlerim";
+    document.getElementById('modalBody').innerHTML = `
+      <ul>
+        <li><a href="#" id="modalProfileBtn">Profilimi Düzenle</a></li>
+        <li><a href="#" id="modalOldRequestsBtn">Önceki Başvurularım</a></li>
+        <li><a href="#" id="modalLogoutBtn" style="color: red;">Çıkış Yap</a></li>
+      </ul>
+    `;
+    const modalOverlay = document.getElementById('modalOverlay');
+    modalOverlay.style.display = 'flex';
+    modalOverlay.focus();
+
+    // Modal içindeki butonlara event listener ekle
+    document.getElementById('modalProfileBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      closeModal();
+      resetActiveStates();
+      document.getElementById('profile').classList.add('active');
+    });
+
+    document.getElementById('modalOldRequestsBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      closeModal();
+      resetActiveStates();
+      loadOldRequests(); // Yeniden yükle ki güncel olsun
+      document.getElementById('oldRequestsView').classList.add('active');
+    });
+
+    document.getElementById('modalLogoutBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      closeModal();
+      logoutUser(); // Çıkış yap fonksiyonunu çağır
+    });
+  }
+
+  // Genel Modal açma fonksiyonu
   function showModal(title, content) {
     document.getElementById('modalTitle').textContent = title;
     document.getElementById('modalBody').innerHTML = content;
-    const modal = document.getElementById('modalOverlay');
-    modal.style.display = 'flex';
-    modal.focus();
+    const modalOverlay = document.getElementById('modalOverlay');
+    modalOverlay.style.display = 'flex';
+    modalOverlay.focus(); // Erişilebilirlik için
   }
 
   // Modal kapatma
   function closeModal() {
     document.getElementById('modalOverlay').style.display = 'none';
+  }
+
+  // Kullanıcı çıkış yap fonksiyonu
+  function logoutUser() {
+    // localStorage'daki tüm kullanıcıya ait verileri sil
+    localStorage.removeItem('kullaniciadi');
+    localStorage.removeItem('kullanicisifre');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userSurname');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userPhone');
+    localStorage.removeItem('userRequests'); // Başvuruları da sil
+
+    alert("Başarıyla çıkış yaptınız!");
+    // Ana sayfaya (giriş/kayıt) yönlendir
+    window.location.href = "index.html";
   }
 
   // Eski başvuruları göster
@@ -497,6 +669,19 @@ Siz isteyin, biz kodlayalım.</p>
     if(requests.length > 10) requests.pop();
 
     localStorage.setItem('userRequests', JSON.stringify(requests));
+  }
+
+  // Profil verilerini yükle
+  function loadProfileData() {
+    const name = localStorage.getItem('userName');
+    const surname = localStorage.getItem('userSurname');
+    const profileEmail = localStorage.getItem('userEmail');
+    const phone = localStorage.getItem('userPhone');
+
+    if(name) document.getElementById('profileName').value = name;
+    if(surname) document.getElementById('profileSurname').value = surname;
+    if(profileEmail) document.getElementById('profileEmail').value = profileEmail;
+    if(phone) document.getElementById('profilePhone').value = phone;
   }
 
   // Güvenlik için basit html escape

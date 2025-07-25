@@ -29,6 +29,10 @@
     min-height: 100vh;
     padding: 1rem;
     transition: all 0.4s ease;
+    display: flex; /* Merkezleme için eklendi */
+    flex-direction: column; /* Merkezleme için eklendi */
+    align-items: center; /* Merkezleme için eklendi */
+    justify-content: center; /* Merkezleme için eklendi */
   }
   header {
     background: var(--accent);
@@ -39,7 +43,9 @@
     font-weight: bold;
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem; /* Artırıldı */
+    width: 100%;
+    max-width: 900px; /* Eklendi */
     user-select: none;
   }
   .dark-toggle {
@@ -68,6 +74,7 @@
     justify-content: center;
     gap: 2rem;
     margin-bottom: 2rem;
+    flex-wrap: wrap; /* Küçük ekranlarda sarması için */
     user-select: none;
   }
   nav button {
@@ -90,7 +97,7 @@
     gap: 2rem;
     flex-wrap: wrap;
     max-width: 900px;
-    margin: 0 auto;
+    width: 100%; /* Eklendi */
   }
   .card {
     background: var(--card-bg);
@@ -99,6 +106,14 @@
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     width: 320px;
     animation: fadeIn 0.5s ease forwards;
+    flex-shrink: 0; /* Küçülmesini engelle */
+    flex-grow: 1; /* Esnek büyüme */
+    max-width: calc(50% - 1rem); /* İki kartın yan yana durması için */
+  }
+  @media (max-width: 768px) {
+    .card {
+      max-width: 100%; /* Küçük ekranlarda tam genişlik */
+    }
   }
   .card h2 {
     margin-bottom: 1.2rem;
@@ -112,6 +127,8 @@
     border-radius: 10px;
     border: 1px solid #ccc;
     font-size: 1rem;
+    background: var(--card-bg); /* Tema uyumu */
+    color: var(--text-color); /* Tema uyumu */
   }
   .card form button {
     width: 100%;
@@ -146,14 +163,29 @@
     padding: 1.5rem 2rem;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     position: relative;
+    animation: fadeIn 0.4s ease forwards; /* Eklendi */
   }
   .modal h2 {
     margin-bottom: 1rem;
     color: var(--accent);
+    text-align: center; /* Ortalandı */
     user-select: none;
   }
-  .modal p {
+  .modal p, .modal ul { /* ul de eklendi */
     line-height: 1.4;
+    margin-bottom: 1rem; /* Eklendi */
+  }
+  .modal ul {
+    list-style: none; /* Varsayılan nokta kaldırıldı */
+    padding-left: 0; /* Sol boşluk kaldırıldı */
+  }
+  .modal ul li a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .modal ul li a:hover {
+    text-decoration: underline;
   }
   .modal-close {
     position: absolute;
@@ -164,6 +196,13 @@
     cursor: pointer;
     color: var(--accent);
     font-weight: bold;
+  }
+  .error-message { /* Hata mesajları için stil */
+    color: red;
+    font-size: 0.9rem;
+    margin-top: -0.8rem;
+    margin-bottom: 1rem;
+    display: none; /* Varsayılan olarak gizli */
   }
   @keyframes fadeIn {
     from {opacity: 0; transform: translateY(20px);}
@@ -186,8 +225,9 @@
   <div class="card">
     <h2>Giriş Yap</h2>
     <form id="loginForm">
-      <input type="text" name="username" placeholder="Kullanıcı Adı" required />
-      <input type="password" name="password" placeholder="Şifre" required />
+      <input type="text" id="loginUsername" name="username" placeholder="Kullanıcı Adı" required />
+      <input type="password" id="loginPassword" name="password" placeholder="Şifre" required />
+      <p class="error-message" id="loginError">Kullanıcı adı veya şifre yanlış!</p>
       <button type="submit">Giriş Yap</button>
     </form>
   </div>
@@ -195,15 +235,15 @@
   <div class="card">
     <h2>Kayıt Ol</h2>
     <form id="registerForm">
-      <input type="text" name="new_username" placeholder="Yeni Kullanıcı Adı" required />
-      <input type="email" name="email" placeholder="E-posta" required />
-      <input type="password" name="new_password" placeholder="Şifre" required />
+      <input type="text" id="registerUsername" name="new_username" placeholder="Yeni Kullanıcı Adı" required />
+      <input type="email" id="registerEmail" name="email" placeholder="E-posta" required />
+      <input type="password" id="registerPassword" name="new_password" placeholder="Şifre" required />
+      <p class="error-message" id="registerError">Lütfen tüm alanları eksiksiz doldurun.</p>
       <button type="submit">Kayıt Ol</button>
     </form>
   </div>
 </main>
 
-<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal" role="document">
     <button class="modal-close" aria-label="Kapat" onclick="closeModal()">×</button>
@@ -234,7 +274,9 @@
   function showModal(title, content) {
     document.getElementById('modalTitle').textContent = title;
     document.getElementById('modalBody').innerHTML = content;
-    document.getElementById('modalOverlay').style.display = 'flex';
+    const modalOverlay = document.getElementById('modalOverlay');
+    modalOverlay.style.display = 'flex';
+    modalOverlay.focus(); // Erişilebilirlik için
   }
 
   // Modal kapatma
@@ -269,15 +311,34 @@ Siz isteyin, biz kodlayalım.</p>
   // Kayıt formu
   document.getElementById('registerForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const newUsername = this.new_username.value.trim();
-    const newPassword = this.new_password.value;
-    if(newUsername === "" || newPassword === "") {
-      alert("Lütfen kullanıcı adı ve şifreyi eksiksiz girin.");
+    const newUsername = document.getElementById('registerUsername').value.trim();
+    const newEmail = document.getElementById('registerEmail').value.trim();
+    const newPassword = document.getElementById('registerPassword').value;
+    const registerError = document.getElementById('registerError');
+
+    registerError.style.display = 'none'; // Hata mesajını sıfırla
+
+    if(newUsername === "" || newEmail === "" || newPassword === "") {
+      registerError.textContent = "Lütfen tüm alanları eksiksiz doldurun.";
+      registerError.style.display = 'block';
       return;
     }
-    // localStorage'a kaydet (basit, gerçek uygulamada şifreyi hashlemelisin)
+    if(!validateEmail(newEmail)) {
+      registerError.textContent = "Lütfen geçerli bir e-posta adresi girin.";
+      registerError.style.display = 'block';
+      return;
+    }
+
+    // --- ÖNEMLİ GÜVENLİK UYARISI ---
+    // Şifreler ve kullanıcı bilgileri asla localStorage'da saklanmamalıdır!
+    // Bu sadece bir demo içindir. Gerçek uygulamalarda mutlaka
+    // sunucu tarafında güvenli kimlik doğrulama (örneğin: JWT, OAuth)
+    // ve şifrelerin güvenli bir şekilde hashlenerek (örn: bcrypt)
+    // veritabanında saklanması gerekir.
+    // ---
     localStorage.setItem('kullaniciadi', newUsername);
     localStorage.setItem('kullanicisifre', newPassword);
+    localStorage.setItem('userEmail', newEmail); // E-postayı da kaydet
     alert("Kayıt başarılı! Artık giriş yapabilirsiniz.");
     this.reset();
   });
@@ -285,8 +346,11 @@ Siz isteyin, biz kodlayalım.</p>
   // Giriş formu
   document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const username = this.username.value.trim();
-    const password = this.password.value;
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const loginError = document.getElementById('loginError');
+
+    loginError.style.display = 'none'; // Hata mesajını sıfırla
 
     const kayitliUsername = localStorage.getItem('kullaniciadi');
     const kayitliPassword = localStorage.getItem('kullanicisifre');
@@ -295,9 +359,16 @@ Siz isteyin, biz kodlayalım.</p>
       // Doğruysa yönlendir
       window.location.href = "basvuruformu.html";
     } else {
-      alert("Kullanıcı adı veya şifre yanlış!");
+      loginError.textContent = "Kullanıcı adı veya şifre yanlış!";
+      loginError.style.display = 'block';
     }
   });
+
+  // E-posta doğrulama fonksiyonu (basit)
+  function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  }
 </script>
 </body>
 </html>
